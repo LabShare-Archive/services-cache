@@ -1,0 +1,25 @@
+{
+  "name": "services-cache",
+  "namespace": "",
+  "main": "./",
+  "version": "v0.16.1115",
+  "description": "LabShare Cache Services",
+  "private": true,
+  "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LabShare/services-cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LabShare/services-cache/issues"
+  },
+  "license": "MIT",
+  "packageDependencies": {
+    "lsc": "*",
+    "services": "*"
+  },
+  "dependencies": {
+    "lsc": "https://github.com/LabShare/lsc",
+    "services": "https://github.com/LabShare/services"
+  }
+}
