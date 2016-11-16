@@ -1,3 +1,1 @@
-module.exports = {
-    // Export services-cache's public Node module libraries here
-};
+module.exports = require('./lib');
