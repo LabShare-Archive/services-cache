@@ -2,7 +2,7 @@
   "name": "services-cache",
   "namespace": "",
   "main": "./",
-  "version": "v0.16.1115",
+  "version": "v0.16.1116",
   "description": "LabShare Cache Services",
   "private": true,
   "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
@@ -20,6 +20,17 @@
   },
   "dependencies": {
     "lsc": "https://github.com/LabShare/lsc",
-    "services": "https://github.com/LabShare/services"
+    "services": "https://github.com/LabShare/services",
+    "flat": "^2.0.1",
+    "lodash": "^4.16.6",
+    "q": "^1.4.1",
+    "redis": "^2.6.3"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "supertest": "^2.0.1"
+  },
+  "scripts": {
+    "test": "jasmine test/cache-spec.js"
   }
 }
