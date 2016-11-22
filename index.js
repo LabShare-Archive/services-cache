@@ -30,4 +30,8 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 });
 
+app.get('/getvalue/:key', function (req, res) {
+ cache.addDisabledCache(req);   
+  res.send('Hello World!')
+});
 app.listen(5000);
