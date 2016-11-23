@@ -10,7 +10,7 @@ let baseConnection = { "host":"127.0.0.1",
 let logger  = {
 error :function (error)
 {
-        throw error;
+        console.log(error);
 }
 };
 //connection settings for redis client
@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/getvalue/:key', function (req, res) {
- cache.addDisabledCache(req);   
+  //cache.addDisabledCache(req);   
   res.send('Hello World!')
 });
 app.listen(5000);

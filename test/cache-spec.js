@@ -1,6 +1,6 @@
 //TEST Scripts for Redis
 
-let cache = require('../lib');
+let cache = require('../lib/cache');
 //base connection
 let baseConnection = { "host":"127.0.0.1",
           "port":6379 
@@ -31,6 +31,10 @@ beforeEach(function() {
 
    cacheClient = new cache(redisOptions);
    cacheClient.initialize(); 
+   cacheClient.setObjectValue = ((value)=>{return value;});
+   cacheClient.formatObjectValue = ((value)=>{return value;});
+   cacheClient.setValue= ((value)=>{return JSON.stringify(value)});
+   cacheClient.formatValue = ((value)=>{return (value)?JSON.parse(value):null;});  
   });
 //after any test ,all the pubsub objects are set to null
 afterEach(function() {  
@@ -39,7 +43,7 @@ afterEach(function() {
   });
 
 it('It will test the storage of a string', function(done) {
-    
+   
     cacheClient.save(['test-string'],20,(error,data)=>
     {
         expect(error).toBeNull();
@@ -49,7 +53,7 @@ it('It will test the storage of a string', function(done) {
 
 });
 it('It will test the retreival of a string', function(done) {
-
+    
     cacheClient.get(['test-string'],(error,data)=>
     {
         expect(data).toEqual(20);
@@ -79,7 +83,7 @@ it('It will test the retreival of a non-existence string', function(done) {
 });
 
 it('It will test the storage of an object', function(done) {
-    cacheClient.saveObject(['test-object'],{name:'test',age:20 },(error,data)=>
+    cacheClient.saveObject('test-object',{name:'test',age:20 },(error,data)=>
     {
         expect(error).toBeNull();
         done();
@@ -101,10 +105,10 @@ it('It will test the storage of an array', function(done) {
 
     let data = [
         {id:1, name:'test 1', age:35},
-        {id:1, name:'test 2', age:25},
-        {id:1, name:'test 3', age:15}
+        {id:2, name:'test 2', age:25},
+        {id:3, name:'test 3', age:15}
     ];
-    cacheClient.deepSaveObject(['User','1'],data,undefined,(error,data)=>
+    cacheClient.deepSaveObjectList(['User','1'],"id",data,(error,data)=>
     {
       
         expect(error).toBeNull();
@@ -113,8 +117,9 @@ it('It will test the storage of an array', function(done) {
     });
 })
 it('It will test the retreival of an stored array', function(done) {
-     cacheClient.getAllObjects(['User','1'],(error,data)=>
+     cacheClient.getAllObjectsList(['User','1'],(error,data)=>
     {
+        console.log(data);
         expect(error).toBeNull();
         done();
 
@@ -122,9 +127,9 @@ it('It will test the retreival of an stored array', function(done) {
 
 })
 it('It will delete stored array', function(done) {
-    cacheClient.deleteAll(['User','1'],(error,data)=>
+    cacheClient.deleteAllList(['User','1'],(error,data)=>
     {
-        cacheClient.getAllObjects(['User','1'],(error,data)=>
+        cacheClient.getAllObjectsList(['User','1'],(error,data)=>
         {
            expect(data.length).toBe(0);
            done();
