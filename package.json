@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "express": "^4.14.0",
     "flat": "^2.0.1",
     "lodash": "^4.16.6",
     "q": "^1.4.1",
