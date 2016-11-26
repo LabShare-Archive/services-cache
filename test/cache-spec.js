@@ -34,11 +34,10 @@ middlewareClient.initialize();
 
 var app = express();
 app.use(middlewareClient.getMiddleware(10));
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-});
 
-app.get('/getvalue/:key', function (req, res) {  
+app.get('/getvalue/:key', function (req, res) {
+  middlewareClient.providerClient.setObjectValue = ((value)=>{return JSON.stringify(value.data);})
+  middlewareClient.providerClient.formatObjectValue = ((value)=>{return JSON.parse(value);})  
   res.send('Hello World!')
 }); 
     
@@ -59,7 +58,7 @@ afterEach(function() {
   });
 it('responds Middleware Hello world test', function(done) {
     request(app)
-      .get('/')
+      .get('/getvalue/1')
       .expect(200)
       .end(function(err, res) {
         if (err) return done(err);
@@ -68,7 +67,7 @@ it('responds Middleware Hello world test', function(done) {
   });
 it('responds Middleware Hello world 2 test for cache test', function(done) {
     request(app)
-      .get('/')
+      .get('/getvalue/1')
       .expect(200)
       .end(function(err, res) {
         if (err) return done(err);
