@@ -219,7 +219,7 @@ it('It will test the update of an object in the list', function(done) {
         cacheClient.addToCatalog('Test',['User','1']);
      cacheClient.saveObjectInList(['User','1'],'1',1,data,10,(error,data)=>
     {
-          console.log(data);
+        
         expect(error).toBeNull();
         done();
 
@@ -231,7 +231,7 @@ it('It will test the update of an object in the list', function(done) {
         cacheClient.addToCatalog('Test',['User','2']);
      cacheClient.saveObjectInList(['User','2'],'1',1,data,100,(error,data)=>
     {
-        console.log(data);
+     
         expect(error).toBeNull();
         done();
 
