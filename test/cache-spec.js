@@ -36,6 +36,7 @@ var app = express();
 app.use(middlewareClient.getMiddleware(10));
 
 app.get('/getvalue/:key', function (req, res) {
+    //Work around for Supertest and express 
   middlewareClient.providerClient.setObjectValue = ((value)=>{return JSON.stringify(value.data);})
   middlewareClient.providerClient.formatObjectValue = ((value)=>{return JSON.parse(value);})  
   res.send('Hello World!')
@@ -48,8 +49,8 @@ beforeEach(function() {
    cacheClient.initialize(); 
    cacheClient.setObjectValue = ((value)=>{return value;});
    cacheClient.formatObjectValue = ((value)=>{return value;});
-   cacheClient.setValue= ((value)=>{return JSON.stringify(value)});
-   cacheClient.formatValue = ((value)=>{return (value)?JSON.parse(value):null;});  
+   cacheClient.setValue= ((value)=>{return value});
+   cacheClient.formatValue = ((value)=>{return (value)});  
   });
 //after any test ,all the pubsub objects are set to null
 afterEach(function() {  
@@ -88,7 +89,7 @@ it('It will test the retreival of a string', function(done) {
     
     cacheClient.get(['test-string'],(error,data)=>
     {
-        expect(data).toEqual(20);
+        expect(data).toEqual('20');
         done();
 
     });
@@ -215,8 +216,22 @@ it('It will test the range retreival of an stored array from 0 to 5', function(d
 })
 it('It will test the update of an object in the list', function(done) {
      let data ={id:1, name:'3test 1', age:35};
+        cacheClient.addToCatalog('Test',['User','1']);
      cacheClient.saveObjectInList(['User','1'],'1',1,data,10,(error,data)=>
     {
+          console.log(data);
+        expect(error).toBeNull();
+        done();
+
+    });
+
+})
+it('It will test the update of an object in the list', function(done) {
+     let data ={id:1, name:'3test 1', age:35};
+        cacheClient.addToCatalog('Test',['User','2']);
+     cacheClient.saveObjectInList(['User','2'],'1',1,data,100,(error,data)=>
+    {
+        console.log(data);
         expect(error).toBeNull();
         done();
 
@@ -238,6 +253,26 @@ it('It will test the range retreival of an stored array from 0 to 5', function(d
     {
 
         expect(data.length).toBe(4);
+        done();
+
+    });
+
+})
+it('It will test the retreival of the catalog', function(done) {
+    cacheClient.getAllFromCatalog('Test',(error,data)=>
+    {
+       
+        expect(error).toBeNull();
+        done();
+
+    });
+
+})
+it('It will test the deletion of the catalog', function(done) {
+    cacheClient.deleteCatalog('Test',(error,data)=>
+    {
+       
+        expect(error).toBeNull();
         done();
 
     });
