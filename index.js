@@ -1,5 +1,6 @@
 module.exports= 
 {
   Cache : require('./lib/cache'),
-  Middleware: require('./lib/middleware')
+  Middleware: require('./lib/middleware'),
+  Class: require('./lib/class')
 }

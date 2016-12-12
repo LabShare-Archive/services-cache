@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "jasmine": "^2.5.2",
-    "supertest": "^2.0.1"
+    "supertest": "^2.0.1",
+     "body-parser": "^1.15.2"
   },
   "scripts": {
     "test": "jasmine test/cache-spec.js"
