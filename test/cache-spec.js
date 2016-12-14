@@ -7,7 +7,7 @@ let config = require('./config');
 let middleware = require('./../lib/middleware/base');
 describe("Cache package test", function () {
     let cacheClient = null;
-    let middlewareClient = new middleware(config.redisOptions, config.maxTime, config.options);
+    let middlewareClient = new middleware(config.redis, config.maxTime, config.options);
     let app = express();
     app.use(bodyParser.json()); // to support JSON-encoded bodies
     app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -41,7 +41,7 @@ describe("Cache package test", function () {
     //before any test ,all the pubsub objects are instantiated
     beforeEach(function () {
 
-        cacheClient = new cache(config.redisOptions, config.maxTime);
+        cacheClient = new cache(config.redis, config.maxTime);
         cacheClient.setObjectValue = ((value) => {
             return value;
         });
