@@ -1,43 +1,9 @@
 //TEST Scripts for Redis
-let request = require('supertest');
-let express = require('express');
-let bodyParser = require('body-parser');
-let cache = require('./../lib/cache');
+let cache = require('./../../../lib/cache');
 let config = require('./config');
-let middleware = require('./../lib/middleware/base');
 describe("Cache package test", function () {
     let cacheClient = null;
-    let middlewareClient = new middleware(config.redis, config.maxTime, config.options);
-    let app = express();
-    app.use(bodyParser.json()); // to support JSON-encoded bodies
-    app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
-        extended: true
-    }));
-    app.use(middlewareClient.getMiddleware(config.duration));
-    //caches the value 
-    app.get('/test/getvalue', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        res.send('Hello World!');
-    });
-    //ignores to cache the value
-    app.get('/test/ignore', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        req.ignoreCache = true;
-        res.send('Hello World Ignored!');
-    });
-    //clears the cache 
-    app.post('/test/update', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        res.send('updated')
-
-    });
-    //cache the post
-    app.post('/test/postData', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        req.allowCache = true;
-        res.send('cached')
-
-    });
+    
     //before any test ,all the pubsub objects are instantiated
     beforeEach(function () {
 
@@ -59,74 +25,6 @@ describe("Cache package test", function () {
     afterEach(function () {
         cacheClient.quit();
         cacheClient = null;
-    });
-    it('It will test if the middleware stores the object in cache', function (done) {
-        request(app)
-            .get('/test/getvalue')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
-    });
-    it('It will test if the object stored in the middleware is in cache', function (done) {
-        cacheClient.getObject(['/test/getvalue'], (error, data) => {
-            expect(data).not.toBeNull();
-            done();
-
-        });
-    });
-    it('It will test if the middleware deletes the cache', function (done) {
-        request(app)
-            .post('/test/update')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
-    });
-    it('It will test if the object stored in the middleware is deleted in cache', function (done) {
-        cacheClient.getObject(['/test/getvalue'], (error, data) => {
-            expect(data).toBeNull();
-            done();
-
-        });
-    });
-    it('It will test if the middleware allows to cache a post method', function (done) {
-        request(app)
-            .post('/test/postData')
-            .send({
-                test: "value"
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
-    });
-    it('It will test if the object stored in the post middleware is stored in cache', function (done) {
-        cacheClient.getObject(['/test/postData:test:value'], (error, data) => {
-            expect(data).not.toBeNull();
-            done();
-
-        });
-    });
-    it('It will test if the middleware ignores a method', function (done) {
-        request(app)
-            .get('/test/ignore')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                done();
-            });
-    });
-    it('It will test if the middleware dont stores the object in cache', function (done) {
-        cacheClient.getObject(['/test/ignore'], (error, data) => {
-            expect(data).toBeNull();
-            done();
-
-        });
     });
     it('It will test the storage of a string', function (done) {
 
