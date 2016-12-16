@@ -8,10 +8,10 @@ module.exports = {
         "port": 6379
     },
     options: {
-        logger: {
+       
             error: function (error) {
                 console.log(error);
-            }
+            
         }
     }
 }
