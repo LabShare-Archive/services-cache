@@ -8,7 +8,7 @@ let middleware = require('./../../../lib/middleware/base');
 let delay = require('delay');
 describe("Middleware package test", function () {
     let cacheClient = null;
-    let middlewareClient = new middleware(config.redis, config.maxTime,config.prefix,config.catalogDuration, config.options);
+    let middlewareClient = new middleware(config.redis, config.maxTime, config.prefix, config.catalogDuration, config.options);
     let app = express();
     app.use(bodyParser.json()); // to support JSON-encoded bodies
     app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -66,11 +66,11 @@ describe("Middleware package test", function () {
             .get('/test/getvalue')
             .expect(200)
             .end(function (err, res) {
-            if (err) return done(err);
-                cacheClient.getObject(['TEST-MIDDLEWARE','/test/getvalue'], (error, data) => {
-                expect(data).not.toBeNull();
-                done();
-            });
+                if (err) return done(err);
+                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/getvalue'], (error, data) => {
+                    expect(data).not.toBeNull();
+                    done();
+                });
             });
     });
     it('It will test if the middleware deletes the cache', function (done) {
@@ -80,11 +80,12 @@ describe("Middleware package test", function () {
             .end(function (err, res) {
                 if (err) return done(err);
                 delay(200)
-               .then(() => {
-              cacheClient.getObject(['TEST-MIDDLEWARE','/test/getvalue'], (error, data) => {
-                    expect(data).toBeNull();
-                done();
-                });});
+                    .then(() => {
+                        cacheClient.getObject(['TEST-MIDDLEWARE', '/test/getvalue'], (error, data) => {
+                            expect(data).toBeNull();
+                            done();
+                        });
+                    });
             });
     });
     it('It will test if the middleware allows to cache a post method', function (done) {
@@ -97,9 +98,9 @@ describe("Middleware package test", function () {
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-               cacheClient.getObject(['TEST-MIDDLEWARE','/test/postData:test:value'], (error, data) => {
-                expect(data).not.toBeNull();
-                done();
+                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/postData:test:value'], (error, data) => {
+                    expect(data).not.toBeNull();
+                    done();
 
                 });
             });
@@ -110,11 +111,11 @@ describe("Middleware package test", function () {
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-            cacheClient.getObject(['TEST-MIDDLEWARE','/test/ignore'], (error, data) => {
-            expect(data).toBeNull();
-            done();
+                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/ignore'], (error, data) => {
+                    expect(data).toBeNull();
+                    done();
 
-        });
+                });
             });
     });
 });
