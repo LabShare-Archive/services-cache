@@ -230,7 +230,7 @@ describe("Promises with cache package test", function () {
             name: '3test 1',
             age: 35
         };
-        cacheClient.addToCatalogAsync('Test', ['User', '1']).then((response) => {
+        cacheClient.addToCatalog('Test', ['User', '1']).then((response) => {
             cacheClient.saveObjectInList(['User', '1'], '1', 1, data, config.duration).then((data) => {
 
                 expect(data).not.toBeNull();
@@ -247,7 +247,7 @@ describe("Promises with cache package test", function () {
             name: '3test 1',
             age: 35
         };
-        cacheClient.addToCatalogAsync('Test', ['User', '2']).then((response) => {
+        cacheClient.addToCatalog('Test', ['User', '2']).then((response) => {
             cacheClient.saveObjectInList(['User', '2'], '1', 1, data, config.duration).then((data) => {
 
                 expect(data).not.toBeNull();
