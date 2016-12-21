@@ -1,3 +1,4 @@
+#For install docker build -t services-cache .
 #docker run -d -p 6379:6379  services-cache:redis
 FROM ubuntu:12.04
 MAINTAINER Jamil Falconi <jamil.falconi@nih.gov>
@@ -12,7 +13,7 @@ RUN apt-get update && apt-get install -y  build-essential &&\
     make  &&\
     make install
 #Expose the image on redis' port.
-EXPOSE 6379:6379
+EXPOSE 6379
 
 VOLUME /data
 WORKDIR /data
