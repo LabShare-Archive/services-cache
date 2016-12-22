@@ -8,7 +8,7 @@ let middleware = require('./../../../lib/middleware/base');
 let delay = require('delay');
 describe("Middleware package test", function () {
     let cacheClient = null;
-    let middlewareClient = new middleware(config.redis, config.maxTime, config.prefix, config.catalogDuration, config.options);
+    let middlewareClient = new middleware({redis:config.redis, maxTime:config.maxTime, prefix:config.prefix, catalogDuration: config.catalogDuration, logger: config.options });
     let app = express();
     app.use(bodyParser.json()); // to support JSON-encoded bodies
     app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
