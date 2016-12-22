@@ -1,5 +1,4 @@
-#For install docker build -t services-cache .
-#docker run -d -p 6379:6379  services-cache:redis
+
 FROM ubuntu:12.04
 MAINTAINER Jamil Falconi <jamil.falconi@nih.gov>
 
