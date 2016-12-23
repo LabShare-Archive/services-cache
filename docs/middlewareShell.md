@@ -5,7 +5,20 @@ Plug in for Shell.
 
 Add the following configuration inside Shell's  configuration:
 ```sh
-"Cache":{
+"shell": {
+    "LoadServices": false,
+    "ServicePath": "",
+    "ServiceUrl": "",
+    "Auth": {
+      "Providers": [
+        "google",
+        "azure",
+        "nih/wsfed"
+      ],
+      "Url": "https://a.labshare.org"
+    },
+     
+    "Cache":{
     "enable":true,
     "duration": 180,
     "maxTime": 600,
@@ -16,7 +29,8 @@ Add the following configuration inside Shell's  configuration:
         "host": "127.0.0.1",
         "port": 6379
     }
-    },
+    }
+  }
 ``` 
 The values of the configuration are:
 
