@@ -6,6 +6,7 @@ This base class delivers generic methods for store and retreive data in Redis.
 
 Extends your class with Base Class and add the super method in the contructor.
 ```sh
+const baseClass = require('services-cache').Class;
  class testClass extends baseClass 
     {
 
