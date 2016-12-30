@@ -29,6 +29,7 @@ describe("Middleware package test", function () {
     //clears the cache 
     app.post('/test/update', function (req, res) {
         req.catalog = 'TEST-CATALOG';
+        req.refreshCache = true;
         res.send('updated')
 
     });
