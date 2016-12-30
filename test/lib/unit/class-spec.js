@@ -2,7 +2,7 @@
 let cClass = require('./../../../lib/class');
 let config = require('./config');
 let q = require('Q');
-xdescribe("Base class test", function () {
+describe("Base class test", function () {
 
     class testClass extends cClass 
     {
@@ -57,7 +57,11 @@ xdescribe("Base class test", function () {
 
     it('It will test the storage of the information in the class', function (done) {
 
-      testObject.getData().then((data)=>
+    testObject.updateData().then((response)=>
+      {
+         return testObject.getData();
+          
+      }).then((data)=>
       {
           expect(data.length >0 && data[0].testTime == testTime ).toBeTruthy();
           done();
