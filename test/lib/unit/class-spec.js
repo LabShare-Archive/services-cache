@@ -57,7 +57,11 @@ describe("Base class test", function () {
 
     it('It will test the storage of the information in the class', function (done) {
 
-      testObject.getData().then((data)=>
+    testObject.updateData().then((response)=>
+      {
+         return testObject.getData();
+          
+      }).then((data)=>
       {
           expect(data.length >0 && data[0].testTime == testTime ).toBeTruthy();
           done();

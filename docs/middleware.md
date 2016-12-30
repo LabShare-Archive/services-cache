@@ -67,8 +67,17 @@ Also you may send an error method:
         res.send('Hello World!');
     });
 ```
+- **req.refreshCache**: Force to refresh the cache.
+```sh
+    app.post('/test/update', function (req, res) {
+        req.catalog = 'TEST-CATALOG';
+        req.refreshCache = true;
+        res.send('updated')
+
+    });
+```
 #### Important
 - For default any request is disabled, you need to add req.allowCache= true for cache the request.
 - If no req.catalog is set, the catalog value will be taken from catalog in config. 
 - If a new catalog is defined in req.catalog, that catalog will hold the new values and for refresh the data
-you need to add the same catalog in the PUT, DELETE, POST request.
+you need to add req.refreshCatalog with that catalog.
