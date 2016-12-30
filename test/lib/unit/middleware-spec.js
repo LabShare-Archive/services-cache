@@ -18,12 +18,12 @@ describe("Middleware package test", function () {
     //caches the value 
     app.get('/test/getvalue', function (req, res) {
         req.catalog = 'TEST-CATALOG';
+        req.allowCache = true;
         res.send('Hello World!');
     });
     //ignores to cache the value
     app.get('/test/ignore', function (req, res) {
         req.catalog = 'TEST-CATALOG';
-        req.ignoreCache = true;
         res.send('Hello World Ignored!');
     });
     //clears the cache 

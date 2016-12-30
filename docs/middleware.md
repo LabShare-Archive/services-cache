@@ -36,11 +36,12 @@ Also you may send an error method:
 - **req.catalog**: Add the response to an specific catalog, if the request has a PUT, DELETE, POST type will refresh this catalog.
 ```sh
   app.get('/getvalue', function (req, res) {
+        req.allowCache = true;
         req.catalog = 'CATALOG';
         res.send('Hello World!');
     });
 ```
-- **req.allowCache**: Allows to cache a request of type PUT, DELETE, POST.
+- **req.allowCache**: Allows to cache a request.
 ```sh
     app.post('/postData', function (req, res) {
         req.catalog = 'CATALOG';
@@ -49,17 +50,25 @@ Also you may send an error method:
 
     });
 ``` 
-- **req.ignoreCache**: Ignores to cache a request.
+- **If req.allowCache is null or undefined**: Ignores to cache a request.
 ```sh
     //ignores to cache the value
     app.get('/ignore', function (req, res) {
         req.catalog = 'CATALOG';
-        req.ignoreCache = true;
         res.send('Hello World Ignored!');
     });
 ```
+- **req.cacheDuration**: Overloads the duration default value, must be a valid number.
+```sh
+  app.get('/getvalue', function (req, res) {
+        req.allowCache = true;
+        req.cacheDuration = 60;
+        req.catalog = 'CATALOG';
+        res.send('Hello World!');
+    });
+```
 #### Important
-- For default any request PUT, DELETE, POST  will refresh the cache. 
+- For default any request is disabled, you need to add req.allowCache= true for cache the request.
 - If no req.catalog is set, the catalog value will be taken from catalog in config. 
 - If a new catalog is defined in req.catalog, that catalog will hold the new values and for refresh the data
 you need to add the same catalog in the PUT, DELETE, POST request.

@@ -14,15 +14,20 @@ npm install
 
 ## Information
 
-- [Cache](https://github.com/JamilOmar/services-cache/blob/master/docs/cache.md).
+- [Cache](https://github.com/LabShare/services-cache/blob/master/docs/cache.md).
 
-- [Base class for inheritance](https://github.com/JamilOmar/services-cache/blob/master/docs/baseClass.md).
+- [Base class for inheritance](https://github.com/LabShare/services-cache/blob/master/docs/baseClass.md).
 
-- [Middleware](https://github.com/JamilOmar/services-cache/blob/master/docs/middleware.md).
+- [Middleware](https://github.com/LabShare/services-cache/blob/master/docs/middleware.md).
 
-- [Middleware with Shell](https://github.com/JamilOmar/services-cache/blob/master/docs/middlewareShell.md).
+- [Middleware with Shell](https://github.com/LabShare/services-cache/blob/master/docs/middlewareShell.md).
 
-- [Run the Docker File](https://github.com/JamilOmar/services-cache/blob/master/docs/docker.md).
+- [Run the Docker File](https://github.com/LabShare/services-cache/blob/master/docs/docker.md).
+
+## Note
+
+The cache's duration is in seconds, also maxTime is used if no duration is given. 
+
 License
 ----
 
