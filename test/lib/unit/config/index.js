@@ -1,6 +1,7 @@
 module.exports = {
     duration: 10,
     maxTime: 60,
+    catalog:"TEST-CATALOG",
     catalogDuration:60,
     prefix:"TEST-MIDDLEWARE",
     redis: {
