@@ -1,4 +1,5 @@
-# Services-Cache
+# Services-Cache 
+[![Build Status](https://travis-ci.com/LabShare/services-cache.svg?token=zsifsALL6Np5avzzjVp1&branch=master)](https://travis-ci.com/LabShare/services-cache)
 
 Services-cache is a Redis cache library that helps in the storage of values and objects with LabShare.
 ## Requirements
