@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "6"
+services:
+  - docker
+before_install:
+  - git config --global url."git@github.com:".insteadOf "https://github.com/"
+  - npm install -g lsc
+  - docker build -t services-cache ./run
+  - docker run -d -p 6379:6379 services-cache
+install:
+  - npm install
+script:
+  - npm test
+  - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm install -g codacy-coverage && npm run coverage && cat ./coverage/lcov.info ./test/ui/coverage/lcov.info | codacy-coverage && rm -rf ./coverage; fi

@@ -2,7 +2,7 @@
   "name": "services-cache",
   "namespace": "",
   "main": "./",
-  "version": "v0.16.1116",
+  "version": "v0.16.1230",
   "description": "LabShare Cache Services",
   "private": true,
   "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
-    "flat": "^2.0.1",
     "lodash": "^4.16.6",
     "q": "^1.4.1",
     "redis": "^2.6.3"
