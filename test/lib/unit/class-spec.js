@@ -2,7 +2,7 @@
 let cClass = require('./../../../lib/class');
 let config = require('./config');
 let q = require('Q');
-describe("Base class test", function () {
+xdescribe("Base class test", function () {
 
     class testClass extends cClass 
     {
