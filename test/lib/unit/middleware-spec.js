@@ -17,8 +17,7 @@ describe("Middleware package test", function () {
     app.use(middlewareClient.getMiddleware(config.duration));
     //caches the value 
     app.get('/test/getvalue', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        req.allowCache = true;
+    req.cacheHelper(req,"ADD","TEST-CATALOG");
         res.send('Hello World!');
     });
     //ignores to cache the value
@@ -28,15 +27,13 @@ describe("Middleware package test", function () {
     });
     //clears the cache 
     app.post('/test/update', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        req.refreshCache = true;
+    req.cacheHelper(req,"REFRESH","TEST-CATALOG");
         res.send('updated')
 
     });
     //cache the post
     app.post('/test/postData', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        req.allowCache = true;
+        req.cacheHelper(req,"ADD","TEST-CATALOG");
         res.send('cached')
 
     });
