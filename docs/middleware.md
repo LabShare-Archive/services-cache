@@ -33,29 +33,39 @@ Also you may send an error method:
 ```
 
 ### Method
-- **req.cacheHelper**: Helper Method for cache the request.
+- **req.cacheHelper**: Helper Method for cache or refresh the request.
 ```sh
-     /**
-     * @description Helper method for cache in requests
-     * @param {object} [req] - The request object.
-     * @param {string} [action] - The action for work with the cache. ADD for cache REFRESH for refresh.
+
+    /**
+     * @description Cache the request
      * @param {string} [catalog] - the name of the catalog for the transaction. Default null.
      * @param {int} [duration] - The duration in seconds, -1 for infinite duration.
      */
-    cacheHelper(req,action, catalog = null , duration=null)
+        add(catalog , duration)
+        {
+          ...
+        }
+    /**
+     * @description Refresh the cache
+     * @param {string} [catalog] - the name of the catalog for the transaction. Default null.
+     */
+        refresh(catalog)
+        {
+          ....
+        }
 
-    });
+    }
 ```
 Example
 
 ```sh
      app.get('/test/data', function (req, res) {
-        req.cacheHelper(req,"ADD","TEST-CATALOG");
+        req.cacheHelper.add("TEST-CATALOG");
         res.send('cached')
 
     });
     app.get('/test/dataFive', function (req, res) {
-    req.cacheHelper(req,"ADD","TEST-CATALOG",5);
+     req.cacheHelper.add("TEST-CATALOG",5);
     res.send('cached for 5 seconds')
 
     });
@@ -65,7 +75,7 @@ Example
     });
 
      app.post('/test/postData', function (req, res) {
-        req.cacheHelper(req,"REFRESH","TEST-CATALOG");
+        req.cacheHelper.refresh("TEST-CATALOG");
         res.send('refreshed')
 
     });
