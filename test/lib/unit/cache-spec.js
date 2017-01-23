@@ -293,5 +293,62 @@ describe("Cache package test", function () {
 
     })
 
+    it('It will publish and receive a message', function (done) {
+
+        let pubSubClient = new cache(config.redis, 
+        config.maxTime,
+        true);
+        pubSubClient.setObjectValue = ((value) => {
+            return value;
+        });
+        pubSubClient.formatObjectValue = ((value) => {
+            return value;
+        });
+       let pubSubClientB = new cache(config.redis, 
+        config.maxTime,
+        true);
+        //let pubSubClientB = pubSubClient.clone();
+        pubSubClient.subscribe('test');
+        setTimeout(function() {
+            pubSubClientB.publish('test',"this is a test");
+        }, 2000);
+        pubSubClient.on('message',(channel,message)=>
+        {
+            expect(message).toEqual('this is a test');
+            done();
+        });
+
+    })
+
+        it('It will publish and receive a message with pattern', function (done) {
+
+        let pubSubClient = new cache(config.redis, 
+        config.maxTime,
+        true);
+        pubSubClient.setObjectValue = ((value) => {
+            return value;
+        });
+        pubSubClient.formatObjectValue = ((value) => {
+            return value;
+        });
+       let pubSubClientB = new cache(config.redis, 
+        config.maxTime,
+        true);
+        //let pubSubClientB = pubSubClient.clone();
+        pubSubClient.psubscribe('test/*');
+        setTimeout(function() {
+            pubSubClientB.publish('test/12',"this is a test");
+        }, 2000);
+        pubSubClient.on('pmessage',(pattern,channel,message)=>
+        {
+            console.log(pattern);
+            expect(message).toEqual('this is a test');
+            done();
+        });
+
+    })
+
+
+
 
 });
