@@ -27,7 +27,9 @@ class Cache {
     get redisClient() {
         return this.client;
     }
-    constructor(redis, maxTime) {
+    constructor(redis, maxTime , ...isPubSub) {
+        super();
+        this.isPubSub = isPubSub;  
         this.maxTime = null;
         this.client = null;
         assert(_.isObject(redis) && redis.host, '`redisConfiguration` must be a valid connection string');
@@ -59,6 +61,66 @@ class Cache {
 
             }
         this.client = redisCli.createClient(redis);
+
+         if( this.isPubSub)
+            {
+    /**
+     * @description On Subscribe event, method invoqued when somebody subscribes to redis.
+     * @return channel : the channel where the client subscribed. 
+     * @return count : the number of susbcribers.
+     * */
+                this.client.on("subscribe", (channel, count)=>
+                {
+                    this.emit("subscribe",channel, count);
+                });
+     /**
+     * @description On PSubscribe event, method invoqued when somebody subscribes to redis.
+     * @return pattern : the pattern (channel) where the client subscribed. Note : a pattern can be /testchanel/* where * can be anything.
+     * @return count : the number of susbcribers.
+     * */           
+                this.client.on("psubscribe", (pattern, count)=>
+                {
+                    this.emit("psubscribe",pattern, count);
+                });
+      /**
+     * @description On Message event, method invoqued when the object receives a message.
+     * @return channel : the channel where the client subscribed.
+     * @return message: The message delivered from the subscription in redis.
+     * */                      
+                this.client.on("message",(channel, message )=>
+                {
+                    this.emit("message",channel, this.formatObjectValue( message));
+                });
+    /**
+     * @description On PMessage event, method invoqued when the object receives a message.
+     * @return pattern : the pattern (channel) where the client subscribed. Note : a pattern can be /testchanel/* where * can be anything.
+     * @return channel : the channel where the client subscribed.
+     * @return message: The message delivered from the subscription in redis.
+     * */
+
+                this.client.on("pmessage",(pattern,channel, message )=>
+                {
+                    this.emit("pmessage",pattern ,channel, this.formatObjectValue( message));
+                });
+     /**
+     * @description On Unsubscribe event, method invoqued when somebody unsubscribes to redis.
+     * @return channel : the channel where the client subscribed.
+     * @return count : the number of susbcribers.
+     * */
+                this.client.on("unsubscribe", (channel, count)=>
+                {
+                    this.emit("unsubscribe",channel, count);
+                });
+      /**
+     * @description On Punsubscribe event, method invoqued when somebody unsubscribes to redis.
+     * @return pattern : the pattern (channel) where the client subscribed. Note : a pattern can be /testchanel/* where * can be anything.
+     * @return count : the number of susbcribers.
+     * */            
+                this.client.on("punsubscribe", (pattern, count)=>
+                {
+                    this.emit("punsubscribe",pattern, count);
+                });
+         }
     };
 ```
 
@@ -479,4 +541,126 @@ Promises example
         });
 
 ```
+**susbcribe**: Method for susbcribe the object to a redis channel. Requires isPubsub = true
 
+```sh
+   /**
+     * @description Method for subscribe to the Redis pubsub.
+     * @param {string} [channel] - Channel to subscribe
+     */ 
+    subscribe(channel)
+```
+
+Example
+```sh
+        subscriberClient.subscribe("Channel Name");
+        });
+
+        EVENTS:
+        publisherClient.on('subscribe',(channel,count)=>
+        {
+            //Expects channel: "Channel Name" , count: 1
+        });
+
+        
+```
+
+**psusbcribe**: Method for susbcribe the object to a redis channel by a giving pattern. Requires isPubsub = true
+
+```sh
+      /**
+     * @description Method for subscribe to the Redis pubsub.
+     * @param {string} [pattern] - Pattern to subscribe. Note : a pattern can be /testchanel/* where * can be anything.
+     */ 
+    psubscribe(pattern)
+```
+
+Example
+```sh
+        subscriberClient.psubscribe("/testchanel/*");
+        });
+
+        EVENTS:
+        publisherClient.on('psubscribe',(pattern,count)=>
+        {
+            //Expects pattern: "/testchanel/*" , count: 1
+        });
+
+        
+```
+**unsusbcribe**: Method for unsusbcribe the object from a redis channel. Requires isPubsub = true
+
+```sh
+  /**
+     * @description Method for unsubscribe from the Redis pubusb.
+     */
+    unsubscribe()
+```
+
+Example
+```sh
+        subscriberClient.unsubscribe();
+        });
+
+        EVENTS:
+        publisherClient.on('unsubscribe',(channel,count)=>
+        {
+            //Expects channel: "Channel Name" , count: 1
+        });
+
+        
+```
+
+**punsusbcribe**: Method for unsusbcribe the object from a redis channel defined by a pattern. Requires isPubsub = true
+
+```sh
+ /**
+     * @description Method for unsubscribe from the Redis pubsub.
+     */
+    punsubscribe()
+```
+
+Example
+```sh
+        subscriberClient.punsubscribe();
+        });
+
+        EVENTS:
+        publisherClient.on('punsubscribe',(pattern,count)=>
+        {
+            //Expects pattern: "/testchanel/*" , count: 1
+        });
+
+        
+```
+
+**publish**: Method for publish a message on a channel(string), requires isPubsub = true
+
+```sh
+    /**
+     * @description Method for publish a message in Redis pubsub.
+     * @param {string} [channel] - Channel to subscribe
+     * @param {object} [message] - Message Object 
+     */ 
+    publish(channel,message)
+```
+
+Example
+```sh
+        publisherClient.publish("Channel Name", 'TEST');
+        });
+
+        publisherClient.publish("test/ChannelName", 'TEST');
+        });
+
+        EVENTS:
+        subscriberClient.on('message',(channel,message)=>
+        {
+            //Expects channel: "Channel Name" , message: 'TEST'
+        });
+
+        subscriberClient.on('pmessage',(pattern,channel,message)=>
+        {
+            //Expects pattern:"test/*" , channel: "ChannelName" , message: 'TEST'
+        });
+```

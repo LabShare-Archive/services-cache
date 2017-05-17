@@ -348,7 +348,11 @@ describe("Cache package test", function () {
         }, 2000);
         pubSubClient.on('pmessage',(pattern,channel,message)=>
         {
+<<<<<<< HEAD
           
+=======
+            
+>>>>>>> 9d61834ca9c4229afc34a0dad75ec75b0cdd60ea
             expect(message).toEqual('this is a test');
             done();
         });
