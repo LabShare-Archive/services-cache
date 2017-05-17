@@ -454,4 +454,29 @@ Promises example
         cacheClient.getAllFromCatalog("Catalog Name").then((data)=>{})
 ```
 
+**deleteDataByScan**: Method for delete a list of elements|values by scanning them.
+
+```sh
+     /**
+  * @description Deletes a list of elements|values by scanning them
+  * @param {string|Array} [prefix] - The prefix of the names of the objects in redis.
+  * @param {callback} [callback] - The callback returning the result of the transaction.
+  * 
+  */
+    deleteDataByScan(prefix, callback)
+```
+
+Callback example
+```sh
+        cacheClient.deleteDataByScan("Prefix", (error, data) => {
+            expect(data.length).toBeGreaterThanOrEqual(1);
+            done();
+        });
+```
+Promises example
+```sh
+          cacheClient.deleteDataByScan("Prefix").then(data => {
+        });
+
+```
 

@@ -61,25 +61,49 @@ Is alredy configurated for use it with lsc, just add the following configuration
 - **req.cacheHelper**: Helper Method for cache or refresh the request.
 ```sh
 
-    /**
-     * @description Cache the request
-     * @param {string} [catalog] - the name of the catalog for the transaction. Default null.
+                   /**
+   * @description Cache the request
+   * @param {string|array} [catalog] - the name of the catalog for the transaction. Default null.
+   * @param {int} [duration] - The duration in seconds, -1 for infinite duration.
+   */
+                req.cacheHelper.add = (catalog, duration) => {
+                  ........
+                }
+                /**
+* @description add the data directly to cache
+* @param {string|array} [key] - The unique ID of the object.
+     * @param {object} [data] - Object for store in cache.
      * @param {int} [duration] - The duration in seconds, -1 for infinite duration.
-     */
-        add(catalog , duration)
-        {
-          ...
-        }
-    /**
-     * @description Refresh the cache
-     * @param {string} [catalog] - the name of the catalog for the transaction. Default null.
-     */
-        refresh(catalog)
-        {
-          ....
-        }
-
-    }
+     * @param {string} [catalog] - The catalog's name for the keys in cache.
+     * @param {callback} [callback] - The callback returning the result of the transaction.
+*/
+                req.cacheHelper.addData = (key, data, duration, catalog, callback) => {
+                ........
+                }
+                /**
+* @description gets the data directly from cache
+* @param {string|array} [key] - the key for the transaction. Default null.
+* @param {callback} [callback] - The callback returning the result of the transaction.
+*/
+                req.cacheHelper.getData = (key, callback) => {
+                    ........
+                },
+                    /**
+       * @description Deletes the cache by using a prefix
+       * @param {string|array} [key] - the key for the transaction. Default null.
+       * @param {callback} [callback] - The callback returning the result of the transaction.
+       */
+                    req.cacheHelper.deleteDataByScan = (key, callback) => {
+                         ........
+                    }
+                /**
+   * @description Refresh the cache
+   * @param {string} [catalog] - the name of the catalog for the transaction. Default null.
+   * @param {callback} [callback] - The callback returning the result of the transaction.
+   */
+                req.cacheHelper.refresh = (catalog, callback) => {
+                     ........
+                }
 ```
 Example
 
@@ -103,6 +127,38 @@ Example
         req.cacheHelper.refresh("TEST-CATALOG");
         res.send('refreshed')
 
+    });
+      //adds data by using the method directly
+    app.post('/test/addDataDirectly', function (req, res) {
+        req.cacheHelper.addData('TEST', mockData,null,"TEST-CATALOG", (err, data) => {
+            if (!err)
+                res.send('cached');
+            else
+                res.status(500).send({ error: err });
+        });
+    });
+    //gets data by using the method directly
+    app.get('/test/getDataDirectly', function (req, res) {
+        req.cacheHelper.getData('TEST', (err, data) => {
+            if (!err)
+                res.send(data)
+            else
+                res.status(500).send({ error: err });
+        });
+    });
+    //deletes all the data by using a prefix
+    app.post('/test/clearData', function (req, res) {
+        req.cacheHelper.deleteDataByScan('', (err, data) => {
+            if (!err)
+                res.send('cached')
+            else
+                req.cacheHelper.getData('TEST', (err, data) => {
+                    if (!err)
+                        res.send(data)
+                    else
+                        res.status(500).send({ error: err });
+                });
+        });
     });
 ```
 #### Important

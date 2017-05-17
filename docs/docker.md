@@ -13,11 +13,11 @@ docker build -t services-cache .
 For run the docker image, type:
 
 ```sh
-docker run -p 6379:6379  services-cache
+docker run --name services-cache -p 6379:6379  services-cache 
 ```
 For run the docker image in the background type, type:
 
 ```sh
-docker run -d -p 6379:6379  services-cache
+docker run --name services-cache -d -p 6379:6379  services-cache
 ```
 Note: Redis' default port is 6379.
