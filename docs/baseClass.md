@@ -7,47 +7,41 @@ This base class delivers generic methods for store and retreive data in Redis.
 Extends your class with Base Class and add the super method in the contructor.
 ```sh
 const baseClass = require('services-cache').Class;
- class testClass extends baseClass 
-    {
+  class testClass extends baseClass {
 
-        get TestTime()
-        {
+        get TestTime() {
             return this._testTime;
 
         }
-        set TestTime(value)
-        {
-            this._testTime =value;
+        set TestTime(value) {
+            this._testTime = value;
         }
 
-        ///internal get all method
-        _dummyData()
-        {
+        _dummyData(time) {
             return [
-                {id:1 , name:"test1" },
-                {id:2 , name:"test2" },
-                {id:3 , name:"test3" },
-                {id:4 , name:"test4" },
-                {id:5 , name:"test5" }
+                { id: 1, name: "test1", testTime: time },
+                { id: 2, name: "test2", testTime: time },
+                { id: 3, name: "test3", testTime: time },
+                { id: 4, name: "test4", testTime: time },
+                { id: 5, name: "test5", testTime: time }
             ];
         }
 
-        getData()
-        {
-            return this._getCacheData(this._catalog,config.catalogDuration,"testClass",config.duration,this._dummyData,null);
+        getData() {
+            return this._getCacheData(this._catalog, config.catalogDuration, "TESTClass", config.duration, this._dummyData, [this._testTime]);
         }
-        updateData()
-        {
+        updateData() {
             return this._refreshCache(this._catalog);
         }
-        constructor()
-        {
-            
-            super({Cache main class config});
-            this._catalog  = "TEST-CLASS-CATALOG";
-            
+        constructor() {
+
+            super(config.redis, config.maxTime);
+            this._catalog = "TEST-CLASS-CATALOG";
+            this._testTime = null;
+
         }
     }
+
 ```
 
 ### Methods

@@ -4,45 +4,38 @@ let config = require('./config');
 
 describe("Base class test", function () {
 
-    class testClass extends cClass 
-    {
+    class testClass extends cClass {
 
-        get TestTime()
-        {
+        get TestTime() {
             return this._testTime;
 
         }
-        set TestTime(value)
-        {
-            this._testTime =value;
+        set TestTime(value) {
+            this._testTime = value;
         }
 
-        _dummyData(time)
-        {
+        _dummyData(time) {
             return [
-                {id:1 , name:"test1" , testTime : time},
-                {id:2 , name:"test2" , testTime : time},
-                {id:3 , name:"test3" , testTime : time},
-                {id:4 , name:"test4" , testTime : time},
-                {id:5 , name:"test5" , testTime : time}
+                { id: 1, name: "test1", testTime: time },
+                { id: 2, name: "test2", testTime: time },
+                { id: 3, name: "test3", testTime: time },
+                { id: 4, name: "test4", testTime: time },
+                { id: 5, name: "test5", testTime: time }
             ];
         }
 
-        getData()
-        {
-            return this._getCacheData(this._catalog,config.catalogDuration,"testClass",config.duration,this._dummyData,[this._testTime]);
+        getData() {
+            return this._getCacheData(this._catalog, config.catalogDuration, "TESTClass", config.duration, this._dummyData, [this._testTime]);
         }
-        updateData()
-        {
+        updateData() {
             return this._refreshCache(this._catalog);
         }
-        constructor()
-        {
-            
-            super(config.redis,config.maxTime);
-            this._catalog  = "TEST-CLASS-CATALOG";
+        constructor() {
+
+            super(config.redis, config.maxTime);
+            this._catalog = "TEST-CLASS-CATALOG";
             this._testTime = null;
-            
+
         }
     }
 
@@ -57,56 +50,63 @@ describe("Base class test", function () {
 
     it('It will test the storage of the information in the class', function (done) {
 
-    testObject.updateData().then((response)=>
-      {
-         return testObject.getData();
-          
-      }).then((data)=>
-      {
-          expect(data.length >0 && data[0].testTime == testTime ).toBeTruthy();
-          done();
-          
-      },(error)=>{
+        testObject.updateData().then((response) => {
+            return testObject.getData();
 
-          expect(error).toBeNull();
-          done();
-      })
+        }).then((data) => {
+            expect(data.length > 0 && data[0].testTime == testTime).toBeTruthy();
+            done();
+
+        }, (error) => {
+
+            expect(error).toBeNull();
+            done();
+        })
 
     });
 
     it('It will test if the information is retreived from cache', function (done) {
 
-      testObject.getData().then((data)=>
-      {
-          testTime = new Date().getTime();
-          expect(data[0].testTime != testTime ).toBeTruthy();
-          done();
-          
-      },(error)=>{
+        testObject.getData().then((data) => {
+            testTime = new Date().getTime();
+            expect(data[0].testTime != testTime).toBeTruthy();
+            done();
 
-          expect(error).toBeNull();
-          done();
-      });
+        }, (error) => {
+
+            expect(error).toBeNull();
+            done();
+        });
     });
 
     it('It will test if the information is updated', function (done) {
 
-      testObject.updateData().then((response)=>
-      {
-          testObject.TestTime = testTime;
-         return testObject.getData();
-          
-      }).then((data)=>
-      {
-          expect(data[0].testTime == testTime ).toBeTruthy();
-          done();
-      },(error)=>{
+        testObject.updateData().then((response) => {
+            testObject.TestTime = testTime;
+            return testObject.getData();
 
-          expect(error).toBeNull();
-          done();
-      });
+        }).then((data) => {
+            expect(data[0].testTime == testTime).toBeTruthy();
+            done();
+        }, (error) => {
+
+            expect(error).toBeNull();
+            done();
+        });
 
     })
-    
+
+    it('It will test if the information is deleted by prefix', function (done) {
+        testObject.cacheClient.deleteDataByScan('TEST').then((data) => {
+            expect(data.length).toBeGreaterThanOrEqual(1);
+            done();
+        }, (error) => {
+
+            expect(error).toBeNull();
+            done();
+        });
+
+    })
+
 
 });

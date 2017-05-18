@@ -292,6 +292,13 @@ describe("Cache package test", function () {
         });
 
     })
+      it('It will delete all data that starts with test', function (done) {
+        cacheClient.deleteDataByScan('test', (error, data) => {
+            expect(data.length).toBeGreaterThanOrEqual(1);
+            done();
+        });
+
+    })
 
     it('It will publish and receive a message', function (done) {
 
@@ -341,7 +348,6 @@ describe("Cache package test", function () {
         }, 2000);
         pubSubClient.on('pmessage',(pattern,channel,message)=>
         {
-            console.log(pattern);
             expect(message).toEqual('this is a test');
             done();
         });
