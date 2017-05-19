@@ -78,6 +78,13 @@ Also you may send an error method:
                 req.cacheHelper.refresh = (catalog, callback) => {
                      ........
                 }
+                              /**
+* @description Recreates response for special events
+* @param {array} [extendedParameters] - Extended Parameters for query.
+*/
+                req.cacheHelper.recreateResponse = (extendedParameters, next) => {
+                   ...........
+                }
 ```
 Example
 
@@ -133,6 +140,14 @@ Example
                         res.status(500).send({ error: err });
                 });
         });
+    });
+     //recreates the response
+    app.get('/test/recreateResponse', function (req, res, next) {
+        req.cacheHelper.recreateResponse(['TEST']);
+        next();
+    }, function (req, res) {
+        req.cacheHelper.add("TEST-CATALOG");
+        res.send('cached')
     });
 ```
 #### Important

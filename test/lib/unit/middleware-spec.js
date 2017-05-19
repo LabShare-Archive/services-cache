@@ -43,7 +43,7 @@ describe("Middleware package test", function () {
     });
     //adds data by using the method directly
     app.post('/test/addDataDirectly', function (req, res) {
-        req.cacheHelper.addData('TEST', mockData,null,"TEST-CATALOG", (err, data) => {
+        req.cacheHelper.addData('TEST', mockData, null, "TEST-CATALOG", (err, data) => {
             if (!err)
                 res.send('cached');
             else
@@ -58,6 +58,14 @@ describe("Middleware package test", function () {
             else
                 res.status(500).send({ error: err });
         });
+    });
+    //recreates the response
+    app.get('/test/recreateResponse', function (req, res, next) {
+        req.cacheHelper.recreateResponse(['TEST']);
+        next();
+    }, function (req, res) {
+        req.cacheHelper.add("TEST-CATALOG");
+        res.send('cached')
     });
     //deletes all the data by using a prefix
     app.post('/test/clearData', function (req, res) {
@@ -152,35 +160,48 @@ describe("Middleware package test", function () {
                 });
             });
     });
-  
-        it('It will test if the middleware cache data directly', function (done) {
-            request(app)
-                .post('/test/addDataDirectly')
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.text).toBe('cached');
+
+    it('It will test if the middleware cache data directly', function (done) {
+        request(app)
+            .post('/test/addDataDirectly')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.text).toBe('cached');
+                done();
+            });
+    });
+    it('It will test if the middleware gets data directly from cache', function (done) {
+        request(app)
+            .get('/test/getDataDirectly')
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).toEqual(mockData);
+                done();
+            });
+    });
+     it('It will test the recreateResponse method', function (done) {
+        request(app)
+            .get('/test/recreateResponse')
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/recreateResponse','TEST'], (error, data) => {
+                    expect(data).not.toBeNull();
                     done();
+
                 });
-        });
-        it('It will test if the middleware gets data directly from cache', function (done) {
-            request(app)
-                .get('/test/getDataDirectly')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).toEqual(mockData);
-                    done();
-                });
-        });
-         it('It will test if the middleware clears data by prefix directly', function (done) {
-            request(app)
-                .post('/test/clearData')
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).toEqual({});
-                    done();
-                });
-        });
+            });
+    });
+     it('It will test if the middleware clears data by prefix directly', function (done) {
+        request(app)
+            .post('/test/clearData')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function (err, res) {
+                expect(res.body).toEqual({});
+                done();
+            });
+    });
 
 });
