@@ -1,5 +1,5 @@
 {
-  "name": "services-cache",
+  "name": "@labshare/services-cache",
   "namespace": "",
   "main": "./",
   "version": "0.17.0607",
