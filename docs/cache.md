@@ -128,7 +128,7 @@ class Cache {
 ### Usage
 ```sh
 //add a reference to the package
-let cache = require('service-cache').Cache;
+let cache = require('@labshare/services-cache').Cache;
 //create the connection string to Redis
 let cacheClient = new cache(redis: {
         "host": "127.0.0.1",
@@ -531,13 +531,38 @@ Promises example
 Callback example
 ```sh
         cacheClient.deleteDataByScan("Prefix", (error, data) => {
-            expect(data.length).toBeGreaterThanOrEqual(1);
-            done();
+          
         });
 ```
 Promises example
 ```sh
           cacheClient.deleteDataByScan("Prefix").then(data => {
+        });
+
+```
+
+**incr**: Method that generates auto incremental id's.
+
+``` /**
+     * @description Generates an auto incremental value which can be used as id.
+     * @param {string | array} [listKey] - The unique ID used for the auto incremental value in redis.
+     * @param {string } [seed] - The seed value, if is not set , the incr will start with 0.
+     * @param {int} [duration] - The duration in seconds, -1 for infinite duration.
+     * @param {callback} [callback] - The callback returning the result of the transaction.
+     * 
+     */
+    incr(listKey, seed, duration, callback) 
+```
+
+Callback example
+```sh
+        cacheClient.incr('test-incr',undefined, config.duration,(error, data) => {
+          
+        });
+```
+Promises example
+```sh
+           cacheClient.incr('test-incr',undefined, config.duration).then(data => {
         });
 
 ```

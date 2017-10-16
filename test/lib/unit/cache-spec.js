@@ -300,6 +300,15 @@ describe("Cache package test", function () {
 
     })
 
+
+    it('It will get an autoincrement value', function (done) {
+        cacheClient.incr('test-incr',undefined, config.duration,(error, data) => {
+            expect(data).toBeGreaterThanOrEqual(1);
+            done();
+        });
+
+    })
+
     it('It will publish and receive a message', function (done) {
 
         let pubSubClient = new cache(config.redis, 
