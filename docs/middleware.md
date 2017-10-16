@@ -10,7 +10,7 @@ Just set express.use( Middleware ).
 The values of the configuration in the middleware constructor are:
 
 ```sh
-     const middleware = require ('services-cache').Middleware;
+     const middleware = require ('@labshare/services-cache').Middleware;
     let middlewareClient = new middleware({redis:config.redis, maxTime:config.maxTime, prefix:config.prefix, catalogDuration: config.catalogDuration, logger: config.options });
 ```
 | Property  | Type | Details |

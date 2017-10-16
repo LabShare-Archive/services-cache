@@ -8,10 +8,9 @@ Services-cache is a Redis cache plugin for [LabShare Services](https://github.co
 - [Node.js](https://nodejs.org/) v6+
 - Redis (if Redis is not installed locally you can use this [docker file](https://github.com/LabShare/services-cache/blob/master/run/Dockerfile))
 
-## Installation
-Go to the package root folder and execute the command:
+## Development
 ```sh
-npm install 
+npm i @labshare/services-cache
 ```
 *You might need to use sudo (UNIX).
 
