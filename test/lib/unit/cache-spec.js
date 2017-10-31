@@ -83,8 +83,7 @@ describe("Cache package test", function () {
 
     it('It will test the storage of an array', function (done) {
 
-        let data = [
-            {
+        let data = [{
                 id: 1,
                 name: 'test 1',
                 age: 35
@@ -109,7 +108,7 @@ describe("Cache package test", function () {
                 name: 'test 5',
                 age: 75
             }
-    ];
+        ];
         cacheClient.deepSaveObjectList(['User', '1'], "id", data, config.duration, (error, data) => {
 
             expect(error).toBeNull();
@@ -146,7 +145,7 @@ describe("Cache package test", function () {
                 name: 'test 10',
                 age: 85
             }
-    ];
+        ];
         cacheClient.deepSaveObjectList(['User', '1'], "id", data, config.duration, (error, data) => {
 
             expect(error).toBeNull();
@@ -174,8 +173,7 @@ describe("Cache package test", function () {
     })
     it('It will test the refresh of the storage of an array', function (done) {
 
-        let data = [
-            {
+        let data = [{
                 id: 1,
                 name: '2test 1',
                 age: 35
@@ -201,7 +199,7 @@ describe("Cache package test", function () {
                 age: 75
             },
 
-    ];
+        ];
         cacheClient.refreshDeepSaveObjectList(['User', '1'], "id", data, config.duration, (error, data) => {
             expect(error).toBeNull();
             done();
@@ -292,7 +290,7 @@ describe("Cache package test", function () {
         });
 
     })
-      it('It will delete all data that starts with test', function (done) {
+    it('It will delete all data that starts with test', function (done) {
         cacheClient.deleteDataByScan('test', (error, data) => {
             expect(data.length).toBeGreaterThanOrEqual(1);
             done();
@@ -301,62 +299,81 @@ describe("Cache package test", function () {
     })
 
 
-    it('It will get an autoincrement value', function (done) {
-        cacheClient.incr('test-incr',undefined, config.duration,(error, data) => {
+    it('It will create an autoincrement value', function (done) {
+        cacheClient.incr('test-incr', undefined, config.duration, (error, data) => {
             expect(data).toBeGreaterThanOrEqual(1);
             done();
+        });
+
+    })
+    it('It will create and get an autoincrement value', function (done) {
+        cacheClient.incr('test-incr-get', undefined, config.duration, (error, data) => {
+            cacheClient.getIncr('test-incr-get', (error, result) => {
+                expect(result).toBe(String(data));
+                done();
+            })
         });
 
     })
 
     it('It will publish and receive a message', function (done) {
 
-        let pubSubClient = new cache(config.redis, 
-        config.maxTime,
-        true);
+        let pubSubClient = new cache(config.redis,
+            config.maxTime,
+            true);
         pubSubClient.setObjectValue = ((value) => {
             return value;
         });
         pubSubClient.formatObjectValue = ((value) => {
             return value;
         });
-       let pubSubClientB = new cache(config.redis, 
-        config.maxTime,
-        true);
+        let pubSubClientB = new cache(config.redis,
+            config.maxTime,
+            true);
+        pubSubClientB.setObjectValue = ((value) => {
+            return value;
+        });
+        pubSubClientB.formatObjectValue = ((value) => {
+            return value;
+        });
         //let pubSubClientB = pubSubClient.clone();
         pubSubClient.subscribe('test');
-        setTimeout(function() {
-            pubSubClientB.publish('test',"this is a test");
+        setTimeout(function () {
+            pubSubClientB.publish('test', "this is a test");
         }, 2000);
-        pubSubClient.on('message',(channel,message)=>
-        {
+        pubSubClient.on('message', (channel, message) => {
             expect(message).toEqual('this is a test');
             done();
         });
 
     })
 
-        it('It will publish and receive a message with pattern', function (done) {
+    it('It will publish and receive a message with pattern', function (done) {
 
-        let pubSubClient = new cache(config.redis, 
-        config.maxTime,
-        true);
+        let pubSubClient = new cache(config.redis,
+            config.maxTime,
+            true);
         pubSubClient.setObjectValue = ((value) => {
             return value;
         });
         pubSubClient.formatObjectValue = ((value) => {
             return value;
         });
-       let pubSubClientB = new cache(config.redis, 
-        config.maxTime,
-        true);
+        let pubSubClientB = new cache(config.redis,
+            config.maxTime,
+            true);
+        pubSubClientB.setObjectValue = ((value) => {
+            return value;
+        });
+        pubSubClientB.formatObjectValue = ((value) => {
+            return value;
+        });
         //let pubSubClientB = pubSubClient.clone();
         pubSubClient.psubscribe('test/*');
-        setTimeout(function() {
-            pubSubClientB.publish('test/12',"this is a test");
+        setTimeout(function () {
+            pubSubClientB.publish('test/12', "this is a test");
         }, 2000);
-        pubSubClient.on('pmessage',(pattern,channel,message)=>
-        {
+        pubSubClient.on('pmessage', (pattern, channel, message) => {
             expect(message).toEqual('this is a test');
             done();
         });

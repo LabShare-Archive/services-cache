@@ -313,13 +313,23 @@ describe("Promises with cache package test", function () {
 
     })
 
-    it('It will get an autoincrement value with promises', function (done) {
+    it('It will create an autoincrement value with promises', function (done) {
         cacheClient.incr('test-incr',undefined, config.duration).then(data => {
             expect(data).toBeGreaterThanOrEqual(1);
             done();
         });
 
     })
+
+    it('It will create and get an autoincrement value', function (done) {
+        cacheClient.incr('test-incr-get', undefined, config.duration).then(data => {
+            cacheClient.getIncr('test-incr-get').then(result => {
+                expect(result).toBe(String(data));
+                done();
+            })
+        });
+    })
+
 
 
 });
