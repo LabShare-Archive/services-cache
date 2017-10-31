@@ -45,21 +45,20 @@ class Cache {
                     return _.join(objectID, ':');
                 return String(objectID);
             },
-            this.setValue = (value) => {
+                       this.setValue = (value) => {
                 return value;
 
-            },
+            };
             this.formatValue = (value) => {
                 return value;
 
-            },
+            };
             this.setObjectValue = (value) => {
-                return value;
-            },
+                return JSON.stringify(value);
+            };
             this.formatObjectValue = (value) => {
-                return value;
-
-            }
+                return (value) ? JSON.parse(value.data) : null;
+            };
         this.client = redisCli.createClient(redis);
 
          if( this.isPubSub)
@@ -134,29 +133,21 @@ let cacheClient = new cache(redis: {
         "host": "127.0.0.1",
         "port": 6379
     }, config.maxTime);
-//set the formaters, by default the formaters will be plain    
-cacheClient.setObjectValue = ((value) =>{
-        return value;
-});
-        cacheClient.formatObjectValue = ((value) => {
-            return value;
-        });
-        cacheClient.setValue = ((value) => {
-            return value
-        });
-        cacheClient.formatValue = ((value) => {
-            return (value)
-        });
-```
-If you want to use JSON as a formater for objects, you can use this example:
+//set the formaters (if you want to overload them), by default the formaters will be:    
+            cacheClient.setValue = (value) => {
+                return value;
 
-```sh
-        cacheClient.setObjectValue = ((value) => {
+            };
+            cacheClient.formatValue = (value) => {
+                return value;
+
+            };
+            cacheClient.setObjectValue = (value) => {
                 return JSON.stringify(value);
-            });
-            this.cacheClient.formatObjectValue = ((value) => {
+            };
+            cacheClient.formatObjectValue = (value) => {
                 return (value) ? JSON.parse(value.data) : null;
-            });
+            };
 ```
 
 By default, you can send an array of primitive values or a string for create a key, if you want to change
@@ -563,6 +554,31 @@ Callback example
 Promises example
 ```sh
            cacheClient.incr('test-incr',undefined, config.duration).then(data => {
+        });
+
+```
+
+
+**getIncr**: Method that generates auto incremental id's.
+
+``` /**
+     * @description Gets the auto incremental value by ID.
+     * @param {string | array} [listKey] - The unique ID used for the auto incremental value in redis.
+     * @param {callback} [callback] - The callback returning the result of the transaction.
+     * 
+     */
+    getIncr(listKey, callback) 
+```
+
+Callback example
+```sh
+         cacheClient.getIncr('test-incr', (error, result) => {
+              
+            })
+```
+Promises example
+```sh
+           cacheClient.getIncr('test-incr').then(data => {
         });
 
 ```
