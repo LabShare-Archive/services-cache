@@ -2,7 +2,7 @@
   "name": "@labshare/services-cache",
   "namespace": "",
   "main": "./",
-  "version": "v1.18.0502",
+  "version": "v1.18.0508",
   "description": "LabShare Cache Services",
   "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
   "repository": {
@@ -17,7 +17,7 @@
     "express": "4.16.0",
     "lodash": "4.17.5",
     "q": "1.4.1",
-    "redis": "2.6.3"
+    "redis": "2.8.0"
   },
   "devDependencies": {
     "body-parser": "1.15.2",

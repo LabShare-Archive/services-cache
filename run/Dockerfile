@@ -6,9 +6,9 @@ MAINTAINER Jamil Falconi <jamil.falconi@nih.gov>
 RUN apt-get update && apt-get install -y  build-essential &&\
     apt-get install -y tcl8.5 &&\
     apt-get install -y wget &&\
-    wget http://download.redis.io/releases/redis-3.2.5.tar.gz &&\
-    tar xzf redis-3.2.5.tar.gz &&\
-    cd redis-3.2.5  &&\
+    wget http://download.redis.io/releases/redis-3.2.6.tar.gz &&\
+    tar xzf redis-3.2.6.tar.gz &&\
+    cd redis-3.2.6  &&\
     make  &&\
     make install
 #Expose the image on redis' port.
