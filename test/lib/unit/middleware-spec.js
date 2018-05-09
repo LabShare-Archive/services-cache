@@ -19,31 +19,9 @@ describe("Middleware package test", function () {
         extended: true
     }));
     app.use(middlewareClient.getMiddleware(config.duration));
-    //caches the value 
-    app.get('/test/getvalue', function (req, res) {
-        req.cacheHelper.add("TEST-CATALOG");
-        res.send('Hello World!');
-    });
-    //ignores to cache the value
-    app.get('/test/ignore', function (req, res) {
-        req.catalog = 'TEST-CATALOG';
-        res.send('Hello World Ignored!');
-    });
-    //clears the cache 
-    app.post('/test/update', function (req, res) {
-        req.cacheHelper.refresh("TEST-CATALOG");
-        res.send('updated')
-
-    });
-    //cache the post
-    app.post('/test/postData', function (req, res) {
-        req.cacheHelper.add("TEST-CATALOG");
-        res.send('cached')
-
-    });
     //adds data by using the method directly
     app.post('/test/addDataDirectly', function (req, res) {
-        req.cacheHelper.addData('TEST', mockData, null, "TEST-CATALOG", (err, data) => {
+        req.cacheHelper.cacheData('TEST', mockData, null, "TEST-CATALOG", (err, data) => {
             if (!err)
                 res.send('cached');
             else
@@ -52,20 +30,12 @@ describe("Middleware package test", function () {
     });
     //gets data by using the method directly
     app.get('/test/getDataDirectly', function (req, res) {
-        req.cacheHelper.getData('TEST', (err, data) => {
+        req.cacheHelper.getfromCache('TEST', (err, data) => {
             if (!err)
                 res.send(data)
             else
                 res.status(500).send({ error: err });
         });
-    });
-    //recreates the response
-    app.get('/test/recreateResponse', function (req, res, next) {
-        req.cacheHelper.recreateResponse(['TEST']);
-        next();
-    }, function (req, res) {
-        req.cacheHelper.add("TEST-CATALOG");
-        res.send('cached')
     });
     //deletes all the data by using a prefix
     app.post('/test/clearData', function (req, res) {
