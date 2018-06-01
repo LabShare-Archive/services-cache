@@ -1,4 +1,6 @@
 # Services-Cache 
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/LabShare/services-cache.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.com/LabShare/services-cache.svg?token=zsifsALL6Np5avzzjVp1&branch=master)](https://travis-ci.com/LabShare/services-cache)
 
 Services-cache is a Redis cache plugin for [LabShare Services](https://github.com/LabShare/services).
