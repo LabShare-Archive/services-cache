@@ -28,11 +28,22 @@
     "@commitlint/cli": "^6.2.0",
     "@commitlint/config-conventional": "^6.1.3",
     "husky": "^0.14.3",
-    "coveralls": "^3.0.1"
+    "coveralls": "^3.0.1",
+    "@labshare/semantic-release-config": "^1.0.0",
+    "travis-deploy-once": "^5.0.0",
+    "semantic-release": "^15.5.0"
   },
   "scripts": {
     "test": "jasmine JASMINE_CONFIG_PATH=./test/lib/jasmine.json",
     "coverage": "istanbul cover jasmine JASMINE_CONFIG_PATH=./test/lib/jasmine.json",
-    "commitmsg": "commitlint -e $GIT_PARAMS"
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "travis-deploy-once": "travis-deploy-once --pro",
+    "semantic-release": "semantic-release"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "release": {
+    "extends": "@labshare/semantic-release-config"
   }
 }
