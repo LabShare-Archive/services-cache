@@ -45,5 +45,6 @@
   },
   "release": {
     "extends": "@labshare/semantic-release-config"
-  }
+  },
+  "peerDependencies": {}
 }
