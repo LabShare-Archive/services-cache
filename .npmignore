@@ -3,5 +3,5 @@ docs
 test
 .npmignore
 .gitmodules
-*.mdcommitlint.config.js
-.coveralls.yml
+*.md
+commitlint.config.js
