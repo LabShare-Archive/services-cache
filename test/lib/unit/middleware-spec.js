@@ -73,64 +73,6 @@ describe("Middleware package test", function () {
         cacheClient.quit();
         cacheClient = null;
     });
-    it('It will test if the middleware stores the object in cache', function (done) {
-        request(app)
-            .get('/test/getvalue')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/getvalue'], (error, data) => {
-                    expect(data).not.toBeNull();
-                    done();
-                });
-            });
-    });
-    it('It will test if the middleware deletes the cache', function (done) {
-        request(app)
-            .post('/test/update')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                delay(200)
-                    .then(() => {
-                        cacheClient.getObject(['TEST-MIDDLEWARE', '/test/getvalue'], (error, data) => {
-                            expect(data).toBeNull();
-                            done();
-                        });
-                    });
-            });
-    });
-    it('It will test if the middleware allows to cache a post method', function (done) {
-        request(app)
-            .post('/test/postData')
-            .send({
-                test: "value"
-            })
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/postData:test:value'], (error, data) => {
-                    expect(data).not.toBeNull();
-                    done();
-
-                });
-            });
-    });
-    it('It will test if the middleware ignores a method', function (done) {
-        request(app)
-            .get('/test/ignore')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/ignore'], (error, data) => {
-                    expect(data).toBeNull();
-                    done();
-
-                });
-            });
-    });
-
     it('It will test if the middleware cache data directly', function (done) {
         request(app)
             .post('/test/addDataDirectly')
@@ -148,19 +90,6 @@ describe("Middleware package test", function () {
             .end(function (err, res) {
                 expect(res.body).toEqual(mockData);
                 done();
-            });
-    });
-     it('It will test the recreateResponse method', function (done) {
-        request(app)
-            .get('/test/recreateResponse')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                cacheClient.getObject(['TEST-MIDDLEWARE', '/test/recreateResponse','TEST'], (error, data) => {
-                    expect(data).not.toBeNull();
-                    done();
-
-                });
             });
     });
      it('It will test if the middleware clears data by prefix directly', function (done) {
