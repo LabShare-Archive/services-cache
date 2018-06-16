@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - 8.11.2
-  - '9'
+  - lts/*
+  - node
 services:
   - docker
 before_install:
@@ -9,8 +9,6 @@ before_install:
   - npm install -g lsc nsp
   - docker build -t services-cache ./run
   - 'docker run -d -p 6379:6379 services-cache'
-install:
-  - npm install
 script:
   - nsp check
   - npm run coverage
@@ -20,8 +18,8 @@ cache:
     - ~/.npm
 notifications:
   email: false
-after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+after_success:
+  - npm run semantic-release
