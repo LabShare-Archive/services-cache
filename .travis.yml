@@ -21,11 +21,5 @@ notifications:
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
-env:
-  - BUILD_LEADER_ID=3
-jobs:
-  include:
-    - stage: release
-      node_js: node
-      after_success: 
-        - npm run semantic-release
+after_success:
+  - npm run semantic-release
