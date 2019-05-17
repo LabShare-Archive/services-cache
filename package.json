@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "express": "4.16.3",
+    "express": "4.17.0",
     "lodash": "4.17.10",
     "q": "1.5.1",
     "redis": "2.8.0"
