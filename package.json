@@ -1,10 +1,14 @@
 {
   "name": "@labshare/services-cache",
   "namespace": "",
-  "main": "./",
-  "version": "1.0.0",
-  "description": "LabShare Cache Services",
-  "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
+  "main":"lib/cache/src/index.js",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "version": "2.0.0",
+  "description": "LabShare Cache Services - Simple and extensible caching module supporting decorators",
+  "types": "index.d.ts",
+  "author": "LabShare",
   "repository": {
     "type": "git",
     "url": "https://github.com/LabShare/services-cache.git"
@@ -15,9 +19,23 @@
   "license": "MIT",
   "dependencies": {
     "express": "4.16.3",
-    "lodash": "4.17.10",
     "q": "1.5.1",
-    "redis": "2.8.0"
+    "@labshare/lb-services-config": "^1.0.10",
+    "@loopback/authentication": "^2.0.3",
+    "@loopback/build": "1.5.3",
+    "@loopback/core": "^1.7.0",
+    "@loopback/rest": "^1.11.2",
+    "@loopback/testlab": "1.2.8",
+    "@loopback/tslint-config": "2.0.4",
+    "@types/bluebird": "3.5.24",
+    "@types/lodash": "^4.14.126",
+    "@types/mocha": "5.2.5",
+    "@types/node": "10.12.9",
+    "@types/passport": "^1.0.0",
+    "@types/redis": "^2.8.12",
+    "bluebird": "3.5.3",
+    "lodash": "^4.17.11",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "body-parser": "1.18.3",
@@ -30,13 +48,23 @@
     "husky": "^0.14.3",
     "coveralls": "^3.0.1",
     "@labshare/semantic-release-config": "^1.0.0",
-    "semantic-release": "^15.5.0"
+    "semantic-release": "^15.5.0",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^5.0.5",
+    "mocha": "5.2.0",
+    "proxyquire": "^2.1.0",
+    "sinon": "^7.2.2",
+    "ts-node": "7.0.1",
+    "typescript": "3.1.6"
   },
   "scripts": {
-    "test": "jasmine JASMINE_CONFIG_PATH=./test/lib/jasmine.json",
-    "coverage": "istanbul cover jasmine JASMINE_CONFIG_PATH=./test/lib/jasmine.json",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
-    "semantic-release": "semantic-release"
+    "test": "mocha src/*.spec.js src/**/*.spec.js",
+    "tdd": "mocha -w src/*.spec.js src/**/*.spec.js",
+    "tdd-debug-brk": "mocha --inspect-brk src/**/*.spec.js",
+    "build": "tsc -p .",
+    "prepublish": "tsc -p .",
+    "prepare": "tsc -p .",
+    "dev": "tsc -p . -w"
   },
   "release": {
     "extends": "@labshare/semantic-release-config"
