@@ -1,17 +1,12 @@
-import { ExpirationStrategy } from '../strategies/expiration.strategy';
-import { RedisStorage } from '../storages/redis.storeage';
-import { MemoryStorage } from '../storages/memory.storage';
 import * as _ from 'lodash';
-import { MissingClientError } from '../errors/index';
-const redisStorage = new ExpirationStrategy(new RedisStorage({ host: '127.0.0.1', port: 6379 }));
-const memoryStorage = new ExpirationStrategy(new MemoryStorage());
 
 export function CacheClear(options: any): Function {
     return function (target: any, methodName: string, descriptor: PropertyDescriptor) {
         const className = target.constructor.name;
-        let cachingStrategy: ExpirationStrategy;
+       
         descriptor.value = async function (...args: any[]) {
-            cachingStrategy = (_.get(redisStorage, "storage.connectionStatus") === 'connected') ? redisStorage: memoryStorage;
+            const provider = _.get(global, 'LABSHARE_CACHE', undefined);
+            let cachingStrategy = provider;
             const generatedCacheKey = (!Array.isArray(args) || !args.length) ? `${className}:${methodName}` : `${className}:${methodName}:${JSON.stringify(args)}`;
             const hashKey = !_.isEmpty(options.cacheKey) ? options.cacheKey : generatedCacheKey;
 
@@ -21,8 +16,6 @@ export function CacheClear(options: any): Function {
                 if (options && options.noop) {
                 return descriptor.value!.apply(this, args);
                 }
-                // A caching client must exist if not set to noop, otherwise this library is doing nothing.
-                throw new MissingClientError(hashKey);
             }
 
 

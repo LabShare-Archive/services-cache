@@ -28,13 +28,13 @@ class TestClassTwo {
     }
 }
 
-describe.only('CacheDecorator', () => {
+describe('CacheDecorator', () => {
 
     beforeEach(async () => {
         await strategy.clear();
     });
 
-    it.only('Should decorate function with ExpirationStrategy correctly', async () => {
+    it('Should decorate function with ExpirationStrategy correctly', async () => {
         const myClass = new TestClassOne();
         await myClass.getUsersPromise();
     });

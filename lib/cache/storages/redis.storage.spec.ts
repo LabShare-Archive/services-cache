@@ -32,12 +32,12 @@ const storage = new MockRedisStorage({
     password: 'pass'
 });
 
-describe.only('RedisStorage', () => {
+describe('RedisStorage', () => {
     it('Should clear Redis without errors', async () => {
         await storage.clear();
     });
 
-    it.only('Should delete cache item if set to undefined', async () => {
+    it('Should delete cache item if set to undefined', async () => {
         await storage.setItem('test', undefined);
 
         Assert.strictEqual(clientMock.delAsync.called, true);
