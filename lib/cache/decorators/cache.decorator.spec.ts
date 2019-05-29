@@ -1,10 +1,11 @@
 import { MemoryStorage } from '../storages/memory.storage';
+
 import { ExpirationStrategy } from '../strategies/expiration.strategy';
 import * as Assert from 'assert';
 import { Cache } from './cache.decorator';
-
-const strategy = new ExpirationStrategy(new MemoryStorage());
+import * as _ from 'lodash';
 const data = ['user', 'max', 'test'];
+let strategy:ExpirationStrategy  = new ExpirationStrategy(new MemoryStorage());
 
 class TestClassOne {
     @Cache({ttl: 1000})
@@ -28,10 +29,12 @@ class TestClassTwo {
     }
 }
 
-describe('CacheDecorator', () => {
+describe('CacheDecorator - MemoryStorage', () => {
 
     beforeEach(async () => {
-        await strategy.clear();
+        strategy = new ExpirationStrategy(new MemoryStorage());
+        _.set(global, 'LABSHARE_CACHE', strategy);
+        
     });
 
     it('Should decorate function with ExpirationStrategy correctly', async () => {
@@ -43,9 +46,8 @@ describe('CacheDecorator', () => {
         const myClass = new TestClassOne();
 
         const users = await myClass.getUsers();
-
         Assert.strictEqual(data, users);
-        Assert.strictEqual(await strategy.getItem<string[]>('TestClassOne:getUsers:[]'), data);
+        Assert.strictEqual(await strategy.getItem<string[]>('TestClassOne:getUsers'), data);
     });
 
     it('Should cache Promise response correctly', async () => {
@@ -53,7 +55,7 @@ describe('CacheDecorator', () => {
 
         await myClass.getUsersPromise().then(async response => {
             Assert.strictEqual(data, response);
-            Assert.strictEqual(await strategy.getItem<string[]>('TestClassOne:getUsersPromise:[]'), data);
+            Assert.strictEqual(await strategy.getItem<string[]>('TestClassOne:getUsersPromise'), data);
         });
     });
 
@@ -62,6 +64,7 @@ describe('CacheDecorator', () => {
 
         const users = await myClass.getUsers();
         Assert.strictEqual(data, users);
-        Assert.strictEqual(await strategy.getItem<string[]>('TestClassTwo:getUsers:[]'), data);
+        Assert.strictEqual(await strategy.getItem<string[]>('TestClassTwo:getUsers'), data);
     });
 });
+

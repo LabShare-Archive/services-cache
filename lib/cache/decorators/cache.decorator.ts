@@ -3,8 +3,6 @@ import * as _ from 'lodash';
 export function Cache(options: any): Function {
 
     return function (target: any, methodName: string, descriptor: PropertyDescriptor) {
-        debugger;
-
         const originalMethod = descriptor.value;
         const className = target.constructor.name;
 

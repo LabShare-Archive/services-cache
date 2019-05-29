@@ -1,4 +1,4 @@
-import {RedisStorage} from './storages/redis.storeage';
+import {RedisStorage} from './storages/redis.storage';
 import {MemoryStorage} from './storages/memory.storage';
 import {ExpirationStrategy} from './strategies/expiration.strategy';
 import {LbServicesCacheComponent} from './component';

@@ -1,4 +1,4 @@
-import { RedisStorage } from './redis.storeage';
+import { RedisStorage } from './redis.storage';
 import * as Proxyquire from 'proxyquire';
 import * as Sinon from 'sinon';
 import * as Assert from 'assert';
@@ -10,7 +10,8 @@ const clientMock = {
     flushdbAsync: Sinon.fake(),
     setItem: Sinon.fake(),
     delAsync: Sinon.fake(),
-    getAsync: Sinon.fake()
+    getAsync: Sinon.fake(),
+    on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
 };
 
 const RedisMock = {
@@ -22,7 +23,7 @@ const RedisMock = {
         prototype: {}
     }
 };
-const MockRedisStorage: typeof RedisStorage = Proxyquire.load('./redis.storeage', {
+const MockRedisStorage: typeof RedisStorage = Proxyquire.load('./redis.storage', {
     'redis': RedisMock
 }).RedisStorage;
 
@@ -33,13 +34,13 @@ const storage = new MockRedisStorage({
 });
 
 describe('RedisStorage', () => {
+    
     it('Should clear Redis without errors', async () => {
         await storage.clear();
     });
 
     it('Should delete cache item if set to undefined', async () => {
         await storage.setItem('test', undefined);
-
         Assert.strictEqual(clientMock.delAsync.called, true);
         Assert.strictEqual(clientMock.delAsync.calledWith('test'), true);
         Assert.strictEqual(clientMock.setItem.called, false);
@@ -58,7 +59,8 @@ describe('RedisStorage', () => {
             flushdbAsync: Sinon.stub().rejects(new Error('Redis connection failed')),
             setItem: Sinon.fake(),
             delAsync: Sinon.fake(),
-            getAsync: Sinon.fake()
+            getAsync: Sinon.fake(),
+            on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
         };
         const RedisMock = {
             createClient: () => clientMock,
@@ -69,7 +71,7 @@ describe('RedisStorage', () => {
                 prototype: {}
             }
         };
-        const MockRedisFailStorage: typeof RedisStorage = Proxyquire.load('./redis.storeage', {
+        const MockRedisFailStorage: typeof RedisStorage = Proxyquire.load('./redis.storage', {
             'redis': RedisMock
         }).RedisStorage;
 

@@ -14,28 +14,27 @@ enum redisStatus {
 
 
 export class RedisStorage implements IStorage {
-
     private client: RedisClient;
     private connectionStatus: redisStatus = redisStatus.DISCONNECTED;
     private failsafeMode: boolean = true;
 
     constructor(redisOptions: ClientOpts, failsafeMode: boolean = true) {
         this.failsafeMode = failsafeMode;
-        this.client =  Redis.createClient(redisOptions);
-    
+        this.client = Redis.createClient(redisOptions);
+
         try {
             if (failsafeMode) {
-                this.client.on('connect', () => this.connectionStatus = redisStatus.CONNECTED);
-                this.client.on('ready', () => this.connectionStatus = redisStatus.CONNECTED);
-                this.client.on('reconnecting', () => this.connectionStatus = redisStatus.DISCONNECTED);
-                this.client.on('end', () => this.connectionStatus = redisStatus.DISCONNECTED);
-                this.client.on('error', () => this.connectionStatus = redisStatus.DISCONNECTED);
+                this.client.on('connect', () => { this.connectionStatus = redisStatus.CONNECTED });
+                this.client.on('ready', () => {this.connectionStatus = redisStatus.CONNECTED });
+                this.client.on('reconnecting', () => { this.connectionStatus = redisStatus.DISCONNECTED });
+                this.client.on('end', () => {  this.connectionStatus = redisStatus.DISCONNECTED });
+                this.client.on('error', () => { this.connectionStatus = redisStatus.DISCONNECTED });
+
             }
         } catch (error) {
-            console.log('connection error');
+            console.log('connection error', error);
         }
 
-    
     }
 
     public async getItem<T>(key: string | undefined): Promise<T> {
@@ -79,4 +78,5 @@ export class RedisStorage implements IStorage {
         }
         return this.client.flushdbAsync();
     }
+
 }
