@@ -7,17 +7,21 @@ export function Cache(options: any): Function {
         const className = target.constructor.name;
 
         descriptor.value = async function (...args: any[]) {
-            const provider = _.get(global, 'LABSHARE_CACHE', undefined);
-            let cachingStrategy = provider;
+
             const generatedCacheKey = (!Array.isArray(args) || !args.length) ? `${className}:${methodName}` : `${className}:${methodName}:${JSON.stringify(args)}`;
             const cacheKey = !_.isEmpty(options.cacheKey) ? options.cacheKey : generatedCacheKey;
+            let cachingStrategy  = _.get(global, 'LABSHARE_CACHE', undefined);
+
 
             if (cachingStrategy) {
                 if (options && options.noop) {
                     return originalMethod.apply(this, args);
                 }
             }
-
+            if (_.isUndefined(cachingStrategy)) {
+                return undefined;
+            }
+            
             const entry = await cachingStrategy.getItem(cacheKey);
 
             if (cachingStrategy) {
