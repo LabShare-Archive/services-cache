@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@labshare/lb-services-config": "1.0.10",
+    "@labshare/lb-services-config": "^1.0.9",
     "@loopback/authentication": "^2.0.3",
     "@loopback/build": "1.5.3",
     "@loopback/context": "1.16.0",
@@ -33,7 +33,6 @@
     "@types/passport": "^1.0.0",
     "@types/redis": "^2.8.12",
     "bluebird": "3.5.3",
-    "clear": "^0.1.0",
     "express": "4.16.3",
     "lodash": "^4.17.11",
     "q": "1.5.1",

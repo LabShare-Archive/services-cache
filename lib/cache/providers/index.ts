@@ -4,4 +4,3 @@
 // License text available at https://opensource.org/licenses/MIT
 
 export * from './cache.strategy.provider';
-export * from './timer.provider';
