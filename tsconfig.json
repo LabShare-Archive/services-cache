@@ -18,12 +18,11 @@
       "removeComments": true,
       "strictNullChecks": false,
       "outDir": "./dist",
-      "declaration": true,
+      "declaration": false,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "noImplicitAny": true,
       "resolveJsonModule": true,
-      "declarationDir": "./types",
       "types": ["jest", "node"],
       "typeRoots": [
         "./typings/globals/",
