@@ -1,4 +1,13 @@
 {
   "$schema": "http://json.schemastore.org/tslint",
-  "extends": ["@loopback/tslint-config/tslint.common.json"]
+  "extends": ["@loopback/tslint-config/tslint.common.json"],
+  "rules": {
+    "no-any": false,
+    "no-invalid-this": false
+},
+"jsRules": {
+    "max-line-length": {
+        "options": [120]
+    }
+}
 }

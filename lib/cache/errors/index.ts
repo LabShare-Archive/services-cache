@@ -1,1 +1,1 @@
-export { MissingClientError } from './missing.client.error';
+export {MissingClientError} from './missing.client.error';

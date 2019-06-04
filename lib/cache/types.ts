@@ -1,19 +1,18 @@
-
 export interface IExpiringCacheItem {
   content: any;
   meta: {
-      createdAt: number;
-      ttl: number;
-  }
+    createdAt: number;
+    ttl: number;
+  };
 }
 
 export interface IOptions {
   ttl?: number;
   isLazy?: boolean;
   isCachedForever?: boolean;
-  cacheKey?:string;
-  noop?:boolean;
-  refreshCache?:boolean;
+  cacheKey?: string;
+  noop?: boolean;
+  refreshCache?: boolean;
 }
 
 import {Request, OperationArgs} from '@loopback/rest';

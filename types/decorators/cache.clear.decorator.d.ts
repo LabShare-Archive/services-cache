@@ -1,1 +1,2 @@
-export declare function CacheClear(options: any): Function;
+import { IOptions } from '../types';
+export declare function CacheClear(options: IOptions): Function;

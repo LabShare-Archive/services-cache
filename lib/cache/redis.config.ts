@@ -1,6 +1,6 @@
-import { ClientOpts } from 'redis';
+import {ClientOpts} from 'redis';
 
 export const redisOptions: ClientOpts = {
-    host: 'localhost',
-    port: 6379
-  };
+  host: 'localhost',
+  port: 6379,
+};

@@ -1,6 +1,6 @@
 import {BindingKey} from '@loopback/context';
 import {ExpirationStrategy} from './strategies/expiration.strategy';
-import { Request, Response } from '@loopback/rest';
+import {Request, Response} from '@loopback/rest';
 
 /**
  * interface definition of a function which accepts a request
@@ -13,9 +13,15 @@ export interface CacheRequest {
 // namespace for binding cache
 export namespace CacheBindings {
   // binding label for cache strategy
-  export const CACHE_STRATEGY = BindingKey.create<ExpirationStrategy>('cache.strategy');
+  export const CACHE_STRATEGY = BindingKey.create<ExpirationStrategy>(
+    'cache.strategy',
+  );
   // binding label for redis storage
-  export const REDIS_STORAGE = BindingKey.create<ExpirationStrategy>('redis.storage');
+  export const REDIS_STORAGE = BindingKey.create<ExpirationStrategy>(
+    'redis.storage',
+  );
   // binding label for memory storage
-  export const MEMORY_STORAGE = BindingKey.create<ExpirationStrategy>('memory.storage');
+  export const MEMORY_STORAGE = BindingKey.create<ExpirationStrategy>(
+    'memory.storage',
+  );
 }
