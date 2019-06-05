@@ -3,6 +3,7 @@ import * as Bluebird from 'bluebird';
 import * as Redis from 'redis';
 import {ClientOpts} from 'redis';
 import {RedisClient} from '../custom';
+import * as _ from 'lodash';
 
 Bluebird.promisifyAll(Redis.RedisClient.prototype);
 Bluebird.promisifyAll(Redis.Multi.prototype);
@@ -40,59 +41,41 @@ export class RedisStorage implements IStorage {
         });
       }
     } catch (error) {
-      console.log('connection error', error);
+      console.error('connection error', error);
     }
   }
 
   public async getItem<T>(key: string | undefined): Promise<T> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
-      return undefined;
-    }
-
     const entry: any = await this.client.getAsync(key);
     let finalItem = entry;
     try {
       finalItem = JSON.parse(entry);
-    } catch (error) {}
-
+    } catch (error) { 
+      console.error('get Item', error);
+    }
     return finalItem;
   }
 
   public async setItem(key: string, content: any): Promise<void> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
-      return undefined;
-    }
-    if (typeof content === 'object') {
+    if (_.isObject(content)) {
       content = JSON.stringify(content);
-    } else if (content === undefined) {
+    } else if (_.isUndefined(content)) {
       return this.client.delAsync(key);
     }
     return this.client.setAsync(key, content);
   }
 
   public async deleteItem(key: string): Promise<void> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
-      return undefined;
+    if ( this.failsafeMode && this.connectionStatus === redisStatus.DISCONNECTED ) {
+      return;
     }
     this.client.del(key);
     return;
   }
 
   public async clear(): Promise<void> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
-      return undefined;
+    if ( this.failsafeMode && this.connectionStatus === redisStatus.DISCONNECTED ) {
+      return;
     }
     return this.client.flushdbAsync();
   }

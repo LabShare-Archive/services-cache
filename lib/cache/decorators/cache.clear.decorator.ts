@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import {IOptions} from '../types';
+import {CacheConstants} from '../constants/index';
 
 export function CacheClear(options: IOptions): Function {
   return function(
@@ -10,8 +11,7 @@ export function CacheClear(options: IOptions): Function {
     const className = target.constructor.name;
 
     descriptor.value = async function(...args: any[]) {
-      const provider = _.get(global, 'LABSHARE_CACHE', undefined);
-      let cachingStrategy = provider;
+      const cachingStrategy = _.get(global, CacheConstants.LABSHARE_CACHE, undefined);
       const generatedCacheKey =
         !Array.isArray(args) || !args.length
           ? `${className}:${methodName}`
@@ -33,7 +33,7 @@ export function CacheClear(options: IOptions): Function {
       if (entry) {
         return await cachingStrategy.deleteItem(hashKey);
       } else {
-        return undefined;
+        return;
       }
     };
     return descriptor;

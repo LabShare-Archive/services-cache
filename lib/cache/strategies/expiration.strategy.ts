@@ -1,6 +1,7 @@
 import {IStorage} from '../storages/IStorage';
 import {AbstractBaseStrategy} from './abstract.base.strategy';
 import {IOptions, IExpiringCacheItem} from '../types';
+import {CacheConstants} from '../constants/index'
 
 export class ExpirationStrategy extends AbstractBaseStrategy {
   constructor(storage: IStorage) {
@@ -16,18 +17,14 @@ export class ExpirationStrategy extends AbstractBaseStrategy {
     return item ? item.content : undefined;
   }
 
-  public async setItem(
-    key: string,
-    content: any,
-    options: IOptions,
-  ): Promise<void> {
-    options = {ttl: 60, isLazy: true, isCachedForever: false, ...options};
+  public async setItem( key: string, content: any, options: IOptions): Promise<void> {
+    options = {ttl: CacheConstants.TTL_60_SEC, isLazy: true, isCachedForever: false, ...options};
 
     let meta = {};
 
     if (!options.isCachedForever) {
       meta = {
-        ttl: options.ttl * 1000,
+        ttl: options.ttl * CacheConstants.TTL_1000_SEC,
         createdAt: Date.now(),
       };
 
@@ -44,7 +41,7 @@ export class ExpirationStrategy extends AbstractBaseStrategy {
     const item = await this.storage.getItem<IExpiringCacheItem>(key);
     if (item && item.meta) {
       await this.storage.deleteItem(key);
-      return undefined;
+      return;
     }
     return;
   }

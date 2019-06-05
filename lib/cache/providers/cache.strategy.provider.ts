@@ -4,6 +4,7 @@ import {ConfigBindings} from '@labshare/lb-services-config';
 import {MemoryStorage, RedisStorage, ExpirationStrategy} from '../index';
 
 import * as _ from 'lodash';
+import { CacheConstants } from '../constants/index';
 
 export class CacheStrategyResolverProvider
   implements Provider<ExpirationStrategy> {
@@ -15,18 +16,15 @@ export class CacheStrategyResolverProvider
   async value(): Promise<ExpirationStrategy> {
     let provider;
     if (
-      _.get(this.labShareConfiguration, 'cache.strategy', 'memory') === 'redis'
+      _.get(this.labShareConfiguration, CacheConstants.CACHE_STRATEGY, CacheConstants.MEMORY) === CacheConstants.REDIS
     ) {
-      const redisOptions = _.get(
-        this.labShareConfiguration,
-        'cache.redisOptions',
-      );
+      const redisOptions = _.get( this.labShareConfiguration, CacheConstants.REDIS_OPTIONS);
       provider = new ExpirationStrategy(new RedisStorage(redisOptions));
-      _.set(global, 'LABSHARE_CACHE', provider);
+      _.set(global, CacheConstants.LABSHARE_CACHE, provider);
       return provider;
     }
     provider = new ExpirationStrategy(new MemoryStorage());
-    _.set(global, 'LABSHARE_CACHE', provider);
+    _.set(global, CacheConstants.LABSHARE_CACHE, provider);
     return provider;
   }
 }
