@@ -67,8 +67,8 @@
     "@typescript-eslint/eslint-plugin": "^1.9.0"
   },
   "scripts": {
-    "test": "lb-mocha -r ts-node/register dist/**/*.spec.js",
     "build": "lb-tsc es2018 --outDir dist",
+    "test": "lb-mocha -r ts-node/register test/lib/cache/**/*.spec.ts",
     "prepublish": "tsc -p .",
     "prepare": "tsc -p .",
     "dev": "tsc -p . -w",

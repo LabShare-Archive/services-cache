@@ -1,5 +1,5 @@
 import {BindingKey} from '@loopback/context';
-import {ExpirationStrategy} from './strategies/expiration.strategy';
+import {LabShareCache} from './strategies/labshare.cache';
 import {Request, Response} from '@loopback/rest';
 
 /**
@@ -13,15 +13,15 @@ export interface CacheRequest {
 // namespace for binding cache
 export namespace CacheBindings {
   // binding label for cache strategy
-  export const CACHE_STRATEGY = BindingKey.create<ExpirationStrategy>(
+  export const CACHE_STRATEGY = BindingKey.create<LabShareCache>(
     'cache.strategy',
   );
   // binding label for redis storage
-  export const REDIS_STORAGE = BindingKey.create<ExpirationStrategy>(
+  export const REDIS_STORAGE = BindingKey.create<LabShareCache>(
     'redis.storage',
   );
   // binding label for memory storage
-  export const MEMORY_STORAGE = BindingKey.create<ExpirationStrategy>(
+  export const MEMORY_STORAGE = BindingKey.create<LabShareCache>(
     'memory.storage',
   );
 }

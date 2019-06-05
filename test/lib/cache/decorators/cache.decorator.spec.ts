@@ -1,11 +1,11 @@
-import { MemoryStorage } from '../storages/memory.storage';
+import { MemoryStorage } from '../../../../lib/cache/storages/memory.storage';
 
-import { ExpirationStrategy } from '../strategies/expiration.strategy';
+import { LabShareCache } from '../../../../lib/cache/strategies/labshare.cache';
 import * as Assert from 'assert';
-import { Cache } from './cache.decorator';
+import { Cache } from '../../../../lib/cache/decorators/cache.decorator';
 import * as _ from 'lodash';
 const data = ['user', 'max', 'test'];
-let strategy:ExpirationStrategy  = new ExpirationStrategy(new MemoryStorage());
+let strategy:LabShareCache  = new LabShareCache(new MemoryStorage());
 
 class TestClassOne {
     @Cache({ttl: 1000})
@@ -32,12 +32,12 @@ class TestClassTwo {
 describe('CacheDecorator - MemoryStorage', () => {
 
     beforeEach(async () => {
-        strategy = new ExpirationStrategy(new MemoryStorage());
+        strategy = new LabShareCache(new MemoryStorage());
         _.set(global, 'LABSHARE_CACHE', strategy);
         
     });
 
-    it('Should decorate function with ExpirationStrategy correctly', async () => {
+    it('Should decorate function with LabShareCache correctly', async () => {
         const myClass = new TestClassOne();
         await myClass.getUsersPromise();
     });

@@ -1,6 +1,6 @@
-import {MemoryStorage} from '../storages/memory.storage';
+import {MemoryStorage} from '../../../../lib/cache/storages/memory.storage';
 import * as Assert from "assert";
-import {ExpirationStrategy} from './expiration.strategy';
+import {LabShareCache} from '../../../../lib/cache/strategies/labshare.cache';
 
 interface ITestType {
     user: {
@@ -12,9 +12,9 @@ const data: ITestType = {
     user: {name: "test"}
 };
 
-describe("ExpirationStrategy", () => {
+describe("LabShareCache", () => {
     it("Should set cache item correctly with isLazy", async () => {
-        const cacher = new ExpirationStrategy(new MemoryStorage());
+        const cacher = new LabShareCache(new MemoryStorage());
 
         await cacher.setItem("test", data, {ttl: 10});
         const entry = await cacher.getItem<ITestType>("test");
@@ -23,7 +23,7 @@ describe("ExpirationStrategy", () => {
     });
 
     it("Should return no item if cache expires istantly with isLazy", async () => {
-        const cacher = new ExpirationStrategy(new MemoryStorage());
+        const cacher = new LabShareCache(new MemoryStorage());
 
         await cacher.setItem("test", data, {ttl: -1});
         const entry = await cacher.getItem<ITestType>("test");
@@ -31,7 +31,7 @@ describe("ExpirationStrategy", () => {
     });
 
     it("Should not find cache item after ttl with isLazy disabled", async () => {
-        const cacher = new ExpirationStrategy(new MemoryStorage());
+        const cacher = new LabShareCache(new MemoryStorage());
 
         await cacher.setItem("test", data, {ttl: 0.001, isLazy: false});
         await wait(10);
@@ -41,7 +41,7 @@ describe("ExpirationStrategy", () => {
     });
 
     it("Should ignore isLazy and ttl options if isCachedForever option is provided and cache forever", async () => {
-        const cacher = new ExpirationStrategy(new MemoryStorage());
+        const cacher = new LabShareCache(new MemoryStorage());
 
         await cacher.setItem("test", data, {ttl: 0, isLazy: false, isCachedForever: true});
         await wait(10);

@@ -1,16 +1,17 @@
 import {IStorage} from '../storages/IStorage';
 import {AbstractBaseStrategy} from './abstract.base.strategy';
 import {IOptions, IExpiringCacheItem} from '../types';
-import {CacheConstants} from '../constants/index'
+import {CacheConstants} from '../constants/index';
+import * as _ from 'lodash';
 
-export class ExpirationStrategy extends AbstractBaseStrategy {
+export class LabShareCache extends AbstractBaseStrategy {
   constructor(storage: IStorage) {
     super(storage);
   }
 
   public async getItem<T>(key: string): Promise<T> {
     const item = await this.storage.getItem<IExpiringCacheItem>(key);
-    if (item && item.meta && item.meta.ttl && this.isItemExpired(item)) {
+    if (item && _.has(item,'meta') && _.has(item, 'meta.ttl') && this.isItemExpired(item)) {
       await this.storage.setItem(key, undefined);
       return undefined;
     }

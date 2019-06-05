@@ -1,5 +1,5 @@
 import * as Assert from "assert";
-import { MemoryStorage } from './memory.storage';
+import { MemoryStorage } from '../../../../lib/cache/storages/memory.storage';
 
 describe("MemoryStorage", () => {
     it("Should add cache item correctly", async () => {

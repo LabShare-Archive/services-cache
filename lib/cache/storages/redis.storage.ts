@@ -42,6 +42,7 @@ export class RedisStorage implements IStorage {
       }
     } catch (error) {
       console.error('connection error', error);
+      throw error;
     }
   }
 
@@ -50,9 +51,7 @@ export class RedisStorage implements IStorage {
     let finalItem = entry;
     try {
       finalItem = JSON.parse(entry);
-    } catch (error) { 
-      console.error('get Item', error);
-    }
+    } catch (error) {}
     return finalItem;
   }
 

@@ -10,7 +10,7 @@ Simple and extensible caching module with redis and memory storage and supportin
     - [With decorator](#with-decorator)
     - [Directly](#directly)
 - [Strategies](#strategies)
-    - [ExpirationStrategy](#expirationstrategy)
+    - [LabShareCache](#labsharecache)
 - [Storages](#storages)
 - [Test](#test)
 
@@ -31,7 +31,7 @@ Caches function response using the given options. Works with different strategie
 *Note: @Cache always converts the method response to a promise because caching might be async.* 
 
 ```ts
-import { Cache, ExpirationStrategy, MemoryStorage } from "@labshare/services-cache";
+import { Cache, LabShareCache, MemoryStorage } from "@labshare/services-cache";
 
 class MyService {
     
@@ -45,9 +45,9 @@ class MyService {
 ## Directly
 
 ```ts
-import { ExpirationStrategy, MemoryStorage } from "@labshare/services-cache";
+import { LabShareCache, MemoryStorage } from "@labshare/services-cache";
 
-const memoryCache = new ExpirationStrategy(new MemoryStorage());
+const memoryCache = new LabShareCache(new MemoryStorage());
 
 class MyService {
     
@@ -66,7 +66,7 @@ class MyService {
 ```
 
 # Strategies
-## ExpirationStrategy
+## LabShareCache
 Cached items expire after a given amount of time.
 
  - `ttl`: *(Default: 60)* Number of seconds to expire the cachte item

@@ -1,4 +1,4 @@
-import { RedisStorage } from './redis.storage';
+import { RedisStorage } from '../../../../lib/cache/storages/redis.storage';
 import * as Proxyquire from 'proxyquire';
 import * as Sinon from 'sinon';
 import * as Assert from 'assert';
@@ -11,6 +11,7 @@ const clientMock = {
     setItem: Sinon.fake(),
     delAsync: Sinon.fake(),
     getAsync: Sinon.fake(),
+// tslint:disable-next-line: no-unused-expression
     on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
 };
 
@@ -23,7 +24,7 @@ const RedisMock = {
         prototype: {}
     }
 };
-const MockRedisStorage: typeof RedisStorage = Proxyquire.load('./redis.storage', {
+const MockRedisStorage: typeof RedisStorage = Proxyquire.load('../../../../lib/cache/storages/redis.storage', {
     'redis': RedisMock
 }).RedisStorage;
 
@@ -55,13 +56,16 @@ describe('RedisStorage', () => {
     });
 
     it('Should throw an Error if connection to redis fails', async () => {
+// tslint:disable-next-line: no-shadowed-variable
         const clientMock = {
             flushdbAsync: Sinon.stub().rejects(new Error('Redis connection failed')),
             setItem: Sinon.fake(),
             delAsync: Sinon.fake(),
             getAsync: Sinon.fake(),
+// tslint:disable-next-line: no-unused-expression
             on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
         };
+// tslint:disable-next-line: no-shadowed-variable
         const RedisMock = {
             createClient: () => clientMock,
             RedisClient: {
@@ -71,7 +75,7 @@ describe('RedisStorage', () => {
                 prototype: {}
             }
         };
-        const MockRedisFailStorage: typeof RedisStorage = Proxyquire.load('./redis.storage', {
+        const MockRedisFailStorage: typeof RedisStorage = Proxyquire.load('../../../../lib/cache/storages/redis.storage', {
             'redis': RedisMock
         }).RedisStorage;
 
