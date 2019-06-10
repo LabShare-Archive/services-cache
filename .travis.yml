@@ -10,7 +10,6 @@ before_install:
   - docker build -t services-cache ./run
   - 'docker run -d -p 6379:6379 services-cache'
 script:
-  - nsp check
   - npm run coverage
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage;
 cache:
