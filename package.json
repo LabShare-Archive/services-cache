@@ -79,7 +79,27 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "tslint": "lb-tslint",
     "tslint:fix": "npm run tslint -- --fix",
-    "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls"
+    "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc npm run test"
+  },
+  "nyc": {
+    "include": [
+      "test/lib/cache/**/*.spec.ts"
+    ],
+    "exclude": [
+      "typings"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": true
   },
   "release": {
     "extends": "@labshare/semantic-release-config"
