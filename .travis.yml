@@ -1,24 +1,47 @@
 language: node_js
+dist: trusty
+sudo: required
+addons:
+  chrome: stable
 node_js:
   - lts/*
   - node
 services:
   - docker
 before_install:
+  - |-
+    if [ $TRAVIS_PULL_REQUEST == false ] && [ $TRAVIS_BRANCH == "master" ];
+     then
+        echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc;
+      else
+        echo "//registry.npmjs.org/:_authToken=\${NPM_INSTALL_TOKEN}" > ~/.npmrc;
+    fi
   - 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
   - npm install -g lsc nsp
   - docker build -t services-cache ./run
   - 'docker run -d -p 6379:6379 services-cache'
 script:
+  - npm i -g codecov
+  - npm rebuild
+  - npm run build
   - npm run coverage
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage;
 cache:
   directories:
     - ~/.npm
+    - node_modules
 notifications:
   email: false
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
-after_success:
-  - npm run semantic-release
+jobs:
+  include:
+    - stage: release
+      if: branch = master
+      node_js: lts/*
+      script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npm run semantic-release
