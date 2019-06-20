@@ -21,7 +21,7 @@
     "@labshare/lb-services-config": "^1.0.9",
     "@loopback/authentication": "^2.0.3",
     "@loopback/build": "1.5.3",
-    "@loopback/context": "1.16.0",
+    "@loopback/context": "1.20.0",
     "@loopback/core": "^1.7.0",
     "@loopback/openapi-v3-types": "^1.0.19",
     "@loopback/rest": "^1.11.2",
