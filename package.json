@@ -36,7 +36,8 @@
     "express": "4.16.3",
     "lodash": "^4.17.11",
     "q": "1.5.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "snyk": "^1.179.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
@@ -70,7 +71,7 @@
     "build": "lb-tsc es2018 --outDir dist",
     "test": "lb-mocha -r ts-node/register test/lib/cache/**/*.spec.ts",
     "prepublish": "tsc -p .",
-    "prepare": "tsc -p .",
+    "prepare": "npm run snyk-protect; tsc -p .",
     "dev": "tsc -p . -w",
     "lint": "npm run prettier:check && npm run tslint",
     "lint:fix": "npm run tslint:fix && npm run prettier:fix",
@@ -80,7 +81,8 @@
     "tslint": "lb-tslint",
     "tslint:fix": "npm run tslint -- --fix",
     "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "snyk-protect": "snyk protect"
   },
   "nyc": {
     "include": [
@@ -103,5 +105,6 @@
   },
   "release": {
     "extends": "@labshare/semantic-release-config"
-  }
+  },
+  "snyk": true
 }
