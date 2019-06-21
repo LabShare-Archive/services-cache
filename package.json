@@ -29,7 +29,7 @@
     "@loopback/tslint-config": "2.0.4",
     "@types/bluebird": "3.5.24",
     "@types/lodash": "^4.14.126",
-    "@types/node": "10.12.9",
+    "@types/node": "12.0.9",
     "@types/passport": "^1.0.0",
     "@types/redis": "^2.8.12",
     "bluebird": "3.5.3",
