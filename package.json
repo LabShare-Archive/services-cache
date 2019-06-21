@@ -6,7 +6,7 @@
     "node": ">=8.9"
   },
   "version": "2.0.0",
-  "description": "LabShare Cache Services - Simple and extensible caching module supporting decorators",
+  "description": "LabShare Cache Services - Simple and extensible caching module with support of decorators",
   "types": "index.d.ts",
   "author": "LabShare",
   "repository": {
