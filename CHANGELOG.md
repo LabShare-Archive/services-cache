@@ -1,3 +1,20 @@
+# [2.0.0](https://github.com/LabShare/services-cache/compare/v1.1.0...v2.0.0) (2019-06-23)
+
+
+### Bug Fixes
+
+* package-lock removal ([4012ce8](https://github.com/LabShare/services-cache/commit/4012ce8))
+
+
+### Features
+
+* v2 ([093d1a9](https://github.com/LabShare/services-cache/commit/093d1a9))
+
+
+### BREAKING CHANGES
+
+* Library upgrade and services-config added
+
 # [1.1.0](https://github.com/LabShare/services-cache/compare/v1.0.0...v1.1.0) (2019-06-23)
 
 
