@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/LabShare/services-cache/compare/v1.0.0...v1.1.0) (2019-06-23)
+
+
+### Bug Fixes
+
+* semantic release fix and package changes ([fcff998](https://github.com/LabShare/services-cache/commit/fcff998))
+
+
+### Features
+
+* service cache component read-me file ([7e62c2d](https://github.com/LabShare/services-cache/commit/7e62c2d))
+* **Redis-Memory Storage:** Caching module with redis and memory storage and supporting decorators ([46f7cb6](https://github.com/LabShare/services-cache/commit/46f7cb6))
+
 # 1.0.0 (2018-06-16)
 
 
