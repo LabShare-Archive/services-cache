@@ -6,7 +6,7 @@
     "node": ">=8.9"
   },
   "version": "2.0.0",
-  "description": "LabShare Cache Services - Simple and extensible caching module supporting decorators",
+  "description": "LabShare Cache Services - Simple and extensible caching module with support of decorators",
   "types": "index.d.ts",
   "author": "LabShare",
   "repository": {
@@ -52,7 +52,7 @@
     "chai": "^4.2.0",
     "coveralls": "^3.0.1",
     "delay": "3.0.0",
-    "husky": "^0.14.3",
+    "husky": "^2.1.0",
     "lerna": "^3.14.1",
     "istanbul": "0.4.5",
     "jasmine": "3.1.0",
@@ -80,7 +80,8 @@
     "tslint": "lb-tslint",
     "tslint:fix": "npm run tslint -- --fix",
     "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc npm run test",
+    "semantic-release": "semantic-release"
   },
   "nyc": {
     "include": [
@@ -101,7 +102,15 @@
     ],
     "all": true
   },
+  "publishConfig": {
+    "access": "restricted"
+  },
   "release": {
     "extends": "@labshare/semantic-release-config"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
   }
 }
