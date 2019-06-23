@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@labshare/lb-services-config": "^1.0.9",
+    "@labshare/services-config": "^1.0.0",
     "@loopback/authentication": "^2.0.3",
     "@loopback/build": "1.5.3",
     "@loopback/context": "1.16.0",

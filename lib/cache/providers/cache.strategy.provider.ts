@@ -1,6 +1,6 @@
 import {ApplicationConfig} from '@loopback/core';
 import {inject, Provider} from '@loopback/context';
-import {ConfigBindings} from '@labshare/lb-services-config';
+import {ConfigBindings} from '@labshare/services-config';
 import {MemoryStorage, RedisStorage, LabShareCache} from '../index';
 
 import * as _ from 'lodash';
