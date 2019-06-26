@@ -46,14 +46,14 @@ this.cacheLib.add('key', 'test');
 
 ```ts
 import {ServicesCache} from '@labshare/services-cache';
-import {LbServicesConfigComponent} from '@labshare/services-config';
+import {ServicesConfigComponent} from '@labshare/services-config';
 
 // Other imports …
 export class LbServicesExampleApplication
 
 {
 constructor(options: ApplicationConfig = {}){
-this. Component(LbServicesConfigComponent); // Binding the config component
+this. Component(ServicesConfigComponent); // Binding the config component
 this.component(ServicesCache); // Method implementation ...
 this.loadCacheStrategy(); // loading cache strategy
   }
@@ -165,7 +165,7 @@ export class ExampleRepository {
 
 ```ts
 import { ExpirationStrategy, MemoryStorage } from'node-ts-cache';
-const await myCache = new ExpirationStrategy(newMemoryStorage());
+const await myCache = new ExpirationStrategy(new MemoryStorage());
 
 classMyService {
     public async getUsers(): Promise<string[]> {
