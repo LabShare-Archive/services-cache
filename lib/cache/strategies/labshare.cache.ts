@@ -25,16 +25,16 @@ export class LabShareCache extends AbstractBaseStrategy {
 
     if (!options.isCachedForever) {
       meta = {
-        ttl: options.ttl * CacheConstants.TTL_1000_SEC,
-        createdAt: Date.now(),
+          ttl: options.ttl,
+          createdAt: Date.now()
       };
-
       if (!options.isLazy) {
-        setTimeout(() => {
-          this.unsetKey(key).then(()=>{})
-        }, options.ttl)
+          setTimeout(() => {
+              this.unsetKey(key);
+          }, options.ttl);
       }
     }
+    
     await this.storage.setItem(key, {meta, content});
   }
 
