@@ -115,6 +115,73 @@ class MyService {
 }
 ```
 
+## Directly with Express App
+
+### Step: 1
+
+Add config file under config/default.json
+
+    ```json
+    "cache": {
+      "strategy": "redis",
+      "redisOptions": {
+        "host": "redis", // redis server ec2-52-90-18-4.compute-1.amazonaws.com
+        "port": 6379
+      }
+    }
+    ```
+
+### Step: 2
+
+```ts
+import {RedisStorage, LabShareCache} from "@labshare/services-cache";
+const config = require('config');
+...
+...
+// if redis 
+const myRedisCache = new LabShareCache(new RedisStorage(config.get('cache.redisOptions')));
+// if memory 
+
+const memoryCache = new LabShareCache(new MemoryStorage());
+
+class MyService {
+    
+/**
+   * GET one hero by id
+   */
+  public async getOne(req: Request, res: Response, next: NextFunction) {
+    let query = parseInt(req.params.id);
+    const cachekey = "cacheKey:"+query;
+
+    const cachedSearchResults = await myRedisCache.getItem<string>(cachekey);
+
+    if (cachedSearchResults) {
+      return cachedSearchResults;
+    }
+
+    let hero = Heroes.find(hero => hero.id === query);
+    await myRedisCache.setItem(cachekey, hero, { ttl: 120, isCachedForever: false });
+
+    if (hero) {
+      res.status(200)
+        .send({
+          message: 'Success',
+          status: res.status,
+          hero
+        });
+    }
+    else {
+      res.status(404)
+        .send({
+          message: 'No hero found with the given id.',
+          status: res.status
+        });
+    }
+  }
+}
+```
+
+
 # Strategies
 ## LabShareCache
 Cached items expire after a given amount of time.
