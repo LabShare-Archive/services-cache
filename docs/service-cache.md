@@ -45,31 +45,44 @@ this.cacheLib.add('key', 'test');
 ### **Example Usage**
 
 ```ts
-import {ServicesCacheComponent} from '@labshare/services-cache';
-import {LbServicesConfigComponent} from '@labshare/lb-services-config';
+import {ServicesCache} from '@labshare/services-cache';
+import {ServicesConfigComponent} from '@labshare/services-config';
 
 // Other imports …
-exportclassLbServicesExampleApplication
+export class LbServicesExampleApplication
 
 {
 constructor(options: ApplicationConfig = {}){
-this. Component(LbServicesConfigComponent); // Binding the lb-services-logger component
-this.component(ServiceCacheComponent); // Method implementation ...
+this. Component(ServicesConfigComponent); // Binding the config component
+this.component(ServicesCache); // Method implementation ...
+this.loadCacheStrategy(); // loading cache strategy
   }
 }
+
+  private async loadCacheStrategy() {
+    await super.boot();
+    try {
+      await this.get(CACHE_STRATEGY);
+    } catch (error) {
+    // tslint:disable-next-line: no-console
+      console.error(error);
+    }
+  }
+
 ```
 
 ```ts
-import {CacheStrategy, cache} from'@labshare/lb-services-cache';
-exportclassFacilityController { constructor(@inject(CacheBindings.CACHE)
-privatecacheLib: CacheStrategy) {}
+import {CacheStrategy, cache} from'@labshare/services-cache';
+export class FacilityController { constructor(@inject(CacheBindings.CACHE)
+private cacheLib: CacheStrategy) {}
 //Any generic method using Cache
 asynccreate(facility: Facility): Promise<Facility> {
 this.cacheLib.add(`key`, 'test'); // Method implementation ... }}
 }
+
 //option -2 Decorator
-@cache()
-asyncgetAll(): Promise<Facility> {}
+@Cache({ttl: 1000})
+async getAll(): Promise<Facility> {}
 ```
 
 ### **Requirements**
@@ -107,12 +120,12 @@ asyncgetAll(): Promise<Facility> {}
   - The global configuration can be set at the main config file.
   - The unique key will be:
 
-    ```ts
-    cache:{
-    driver: name of the driver,
-    ttl?: Max time,
-    collection?: a prefix which can be attached to all the keys,
-    driverConfiguration:{
+    ```json
+    "cache": {
+      "strategy": "redis",
+      "redisOptions": {
+        "host": "redis",
+        "port": 6379
       }
     }
     ```
@@ -132,9 +145,9 @@ Caches function response using the given options. Works with different strategie
 -options: Options passed to the strategy for this particular method
 
 ```ts
-import { Cache, ExpirationStrategy, MemoryStorage } from'node-ts-cache';
-constmyStrategy = newExpirationStrategy(newMemoryStorage());
-exportclassExampleRepository {
+import { Cache, ExpirationStrategy, MemoryStorage } from'@labshare/services-cache';
+constmyStrategy = new ExpirationStrategy(new MemoryStorage());
+export class ExampleRepository {
 
     @Cache()
     publicgetBar(foo: string): Promise<string> {
@@ -152,17 +165,17 @@ exportclassExampleRepository {
 
 ```ts
 import { ExpirationStrategy, MemoryStorage } from'node-ts-cache';
-awaitmyCache = newExpirationStrategy(newMemoryStorage());
+const await myCache = new ExpirationStrategy(new MemoryStorage());
 
 classMyService {
-    publicasyncgetUsers(): Promise<string[]> {
-        constcachedUsers = awaitmyCache.getItem<string[]>('users');
+    public async getUsers(): Promise<string[]> {
+        const cachedUsers = await myCache.getItem<string[]>('users');
         if (cachedUsers) {
             returncachedUsers;
         }
-        constnewUsers = ['Max', 'User'];
-        awaitmyCache.setItem('users', newUsers, {  ttl:60 });
-        returnnewUsers;
+        const newUsers = ['Max', 'User'];
+        await myCache.setItem('users', newUsers, {  ttl:60 });
+        return newUsers;
     }
 }
 ```
@@ -180,6 +193,7 @@ Cached items expire after a given amount of time.
 ### To Retrieve the Cache.
 
 No changes are needed inside your code to cache the returned value. Only add the decorator to your method, and the return value is cached
+
   ```ts
    // If getUserById('123') were called, the return value would be cached
 
@@ -199,7 +213,7 @@ No changes are needed inside your code to cache the returned value. Only add the
 
   @CacheClear({ cacheKey:TestClass.setCacheKey })
 
-  publicasyncsetProp(id: string, value: string): Promise<void> {
+  public async SetProp(id: string, value: string): Promise<void> {
 
     this.aProp = value;
   }

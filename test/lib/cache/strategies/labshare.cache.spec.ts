@@ -13,12 +13,16 @@ const data: ITestType = {
 };
 
 describe("LabShareCache", () => {
+    it("Should set cache item correctly with isLazy and isCachedForever ", async () => {
+        const cacher = new LabShareCache(new MemoryStorage());
+        await cacher.setItem("test", data, {ttl: 100, isCachedForever:true});
+        const entry = await cacher.getItem<ITestType>("test");
+        Assert.deepStrictEqual(entry, data);
+    });
     it("Should set cache item correctly with isLazy", async () => {
         const cacher = new LabShareCache(new MemoryStorage());
-
-        await cacher.setItem("test", data, {ttl: 10});
+        await cacher.setItem("test", data, {ttl: 100});
         const entry = await cacher.getItem<ITestType>("test");
-
         Assert.deepStrictEqual(entry, data);
     });
 
