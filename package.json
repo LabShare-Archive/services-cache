@@ -36,7 +36,8 @@
     "express": "4.16.3",
     "lodash": "^4.17.11",
     "q": "1.5.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "snyk": "^1.192.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
@@ -69,7 +70,7 @@
   "scripts": {
     "build": "lb-tsc es2018 --outDir dist",
     "test": "lb-mocha -r ts-node/register test/lib/cache/**/*.spec.ts",
-    "prepublish": "tsc -p .",
+    "prepublish": "npm run snyk-protect; tsc -p .",
     "prepare": "tsc -p .",
     "dev": "tsc -p . -w",
     "lint": "npm run prettier:check && npm run tslint",
@@ -81,7 +82,8 @@
     "tslint:fix": "npm run tslint -- --fix",
     "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc npm run test",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect"
   },
   "nyc": {
     "include": [
@@ -112,5 +114,6 @@
     "hooks": {
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "snyk": true
 }

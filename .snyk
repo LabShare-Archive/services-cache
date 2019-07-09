@@ -1,0 +1,66 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - '@loopback/testlab > sinon > nise > @sinonjs/formatio > @sinonjs/samsam > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - lodash:
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/context > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/testlab > sinon > @sinonjs/samsam > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > strong-error-handler > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > strong-docs > typedoc > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > mocha > yargs-unparser > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > nyc > istanbul-lib-instrument > @babel/types > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/testlab > sinon > @sinonjs/formatio > @sinonjs/samsam > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > strong-error-handler > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > nyc > istanbul-lib-instrument > @babel/traverse > @babel/generator > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/context > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > @loopback/context > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > nyc > istanbul-lib-instrument > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > async > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/build > nyc > istanbul-lib-instrument > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > @loopback/core > @loopback/context > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > async > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > async > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > async > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > strong-globalize > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > @loopback/core > @loopback/context > @loopback/metadata > lodash':
+        patched: '2019-07-09T05:48:41.816Z'
