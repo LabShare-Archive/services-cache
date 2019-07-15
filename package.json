@@ -39,7 +39,7 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.0.0",
+    "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^7.0.1",
     "@labshare/semantic-release-config": "^1.0.0",
     "@types/chai": "^4.1.7",
