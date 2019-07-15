@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
-    "@commitlint/config-conventional": "^7.0.1",
+    "@commitlint/config-conventional": "^8.1.0",
     "@labshare/semantic-release-config": "^1.0.0",
     "@types/chai": "^4.1.7",
     "@types/jest": "^24.0.13",
