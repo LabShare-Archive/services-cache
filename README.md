@@ -53,7 +53,7 @@ Create a Config folder in the root and add config file under config/default.json
     "cache": {
       "strategy": "redis",
       "redisOptions": {
-        "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
+        "host": "ec2-52-90-18-4.compute-2.amazonaws.com", // eg : redis server 
         "port": 6379
       }
     }
@@ -121,7 +121,7 @@ class MyService {
     "cache": {
       "strategy": "redis",
       "redisOptions": {
-        "host": "redis", // redis server
+        "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
         "port": 6379
       }
     }
@@ -150,7 +150,6 @@ this.loadCacheStrategy(); // loading cache strategy
     try {
       await this.get(CACHE_STRATEGY);
     } catch (error) {
-    // tslint:disable-next-line: no-console
       console.error(error);
     }
   }
@@ -178,7 +177,7 @@ class MyService {
 }
 ```
 
-## Directly
+## Directly in the code with loopback application.
 
 ```ts
 import { LabShareCache, MemoryStorage } from "@labshare/services-cache";
@@ -199,8 +198,6 @@ class MyService {
     }
 }
 ```
-
-
 
 # Strategies
 ## LabShareCache
@@ -236,4 +233,3 @@ License
 ----
 
 MIT
-
