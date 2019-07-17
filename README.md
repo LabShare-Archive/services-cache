@@ -42,7 +42,6 @@ Simple and extensible caching module with redis and memory storage and supportin
 
 ## Usage
 
-
 ## Steps to use directly in Simple Express Application
 
 ### Step: 1
@@ -93,7 +92,7 @@ class MyService {
     if (hero) {
       res.status(200)
         .send({
-          message: 'Success',
+          message: 'Successfully',
           status: res.status,
           hero
         });
