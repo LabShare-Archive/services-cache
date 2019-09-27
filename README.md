@@ -49,12 +49,15 @@ Simple and extensible caching module with redis and memory storage and supportin
 Create a Config folder in the root and add config file under config/default.json
 
     ```json
+    "services":
+    {
     "cache": {
       "strategy": "redis",
       "redisOptions": {
         "host": "ec2-52-90-18-4.compute-2.amazonaws.com", // eg : redis server 
         "port": 6379
       }
+    }
     }
     ```
 
@@ -66,7 +69,7 @@ const config = require('config');
 ...
 ...
 // if redis 
-const myRedisCache = new LabShareCache(new RedisStorage(config.get('cache.redisOptions')));
+const myRedisCache = new LabShareCache(new RedisStorage(config.get('services.cache.redisOptions')));
 // if memory 
 
 const memoryCache = new LabShareCache(new MemoryStorage());
@@ -117,12 +120,14 @@ class MyService {
   - The unique key will be:
 
     ```json
+    "services":{
     "cache": {
       "strategy": "redis",
       "redisOptions": {
         "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
         "port": 6379
       }
+    }
     }
     ```
 ### Step 2 : Bind the ServicesCache component to application

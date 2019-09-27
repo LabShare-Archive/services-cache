@@ -11,7 +11,11 @@ export function CacheClear(options: IOptions): Function {
     const className = target.constructor.name;
 
     descriptor.value = async function(...args: any[]) {
-      const cachingStrategy = _.get(global, CacheConstants.LABSHARE_CACHE, undefined);
+      const cachingStrategy = _.get(
+        global,
+        CacheConstants.LABSHARE_CACHE,
+        undefined,
+      );
       const generatedCacheKey =
         !Array.isArray(args) || !args.length
           ? `${className}:${methodName}`
