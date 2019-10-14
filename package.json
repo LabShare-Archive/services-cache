@@ -27,7 +27,7 @@
     "@loopback/rest": "^1.11.2",
     "@loopback/testlab": "1.2.8",
     "@loopback/tslint-config": "2.0.4",
-    "@types/bluebird": "3.5.24",
+    "@types/bluebird": "3.5.28",
     "@types/lodash": "^4.14.126",
     "@types/node": "10.12.9",
     "@types/passport": "^1.0.0",
