@@ -112,25 +112,7 @@ class MyService {
 ```
 ## Steps to use in Simple Loopback Application
 
-### Step 1 : add to global config
-
-- create a Config folder in the root and add to global configuration under it config/default.json
-
-  - The global configuration can be set at the main config file.
-  - The unique key will be:
-
-    ```json
-    "services":{
-    "cache": {
-      "strategy": "redis",
-      "redisOptions": {
-        "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
-        "port": 6379
-      }
-    }
-    }
-    ```
-### Step 2 : Bind the ServicesCache component to application
+### Step 1 : Bind the ServicesCache component to application
 
 ```ts
 import {ServicesCache} from '@labshare/services-cache';
@@ -141,7 +123,14 @@ export class LbServicesExampleApplication
 
 {
 constructor(options: ApplicationConfig = {}){
-this. Component(ServicesConfigComponent); // Binding the lb-services-logger component
+  // binding
+    this.bind(CacheBindings.CACHE_CONFIG).to({
+      "strategy": "redis",
+      "redisOptions": {
+        "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
+        "port": 6379
+      }
+    });
 this.component(ServicesCache); // Method implementation ...
 this.loadCacheStrategy(); // loading cache strategy
   }
@@ -159,7 +148,7 @@ this.loadCacheStrategy(); // loading cache strategy
   }
 
 ```
-### Step 3 : With decorator
+### Step 2 : With decorator
 
 ## With decorator
 Caches function response using the given options. Works with different strategies and storages. Uses all arguments to build an unique key.
