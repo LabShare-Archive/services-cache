@@ -1,8 +1,6 @@
 language: node_js
 dist: trusty
 sudo: required
-addons:
-  chrome: stable
 node_js:
   - lts/*
   - node
@@ -17,12 +15,10 @@ before_install:
         echo "//registry.npmjs.org/:_authToken=\${NPM_INSTALL_TOKEN}" > ~/.npmrc;
     fi
   - 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
-  - npm install -g lsc nsp
+  - npm install -g @labshare/lsc codecov
   - docker build -t services-cache ./run
   - 'docker run -d -p 6379:6379 services-cache'
 script:
-  - npm i -g codecov
-  - npm rebuild
   - npm run build
   - npm run coverage
 cache:
