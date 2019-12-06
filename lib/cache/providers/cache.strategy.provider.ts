@@ -1,24 +1,37 @@
-import {ApplicationConfig} from '@loopback/core';
 import {inject, Provider} from '@loopback/context';
-import {ConfigBindings} from '@labshare/services-config';
-import {MemoryStorage, RedisStorage, LabShareCache} from '../index';
+import {
+  MemoryStorage,
+  RedisStorage,
+  LabShareCache,
+  CacheBindings,
+} from '../index';
 
 import * as _ from 'lodash';
-import { CacheConstants } from '../constants/index';
+import {CacheConstants} from '../constants/index';
+import {LabShareCacheConfig} from '../types';
 
-export class CacheStrategyResolverProvider
-  implements Provider<LabShareCache> {
-  constructor(
-    @inject(ConfigBindings.CONFIG, {optional: true})
-    protected labShareConfiguration: ApplicationConfig,
-  ) {}
+export class CacheStrategyResolverProvider implements Provider<LabShareCache> {
+  constructor() {}
+
+  /**
+   * @property {LabShareCacheConfig} cacheConfig - Cache configuration.
+   */
+  @inject(CacheBindings.CACHE_CONFIG, {optional: true})
+  cacheConfig: LabShareCacheConfig;
 
   async value(): Promise<LabShareCache> {
     let provider;
     if (
-      _.get(this.labShareConfiguration, CacheConstants.CACHE_STRATEGY, CacheConstants.MEMORY) === CacheConstants.REDIS
+      _.get(
+        this.cacheConfig,
+        CacheConstants.CACHE_STRATEGY,
+        CacheConstants.MEMORY,
+      ) === CacheConstants.REDIS
     ) {
-      const redisOptions = _.get( this.labShareConfiguration, CacheConstants.REDIS_OPTIONS);
+      const redisOptions = _.get(
+        this.cacheConfig,
+        CacheConstants.REDIS_OPTIONS,
+      );
       provider = new LabShareCache(new RedisStorage(redisOptions));
       _.set(global, CacheConstants.LABSHARE_CACHE, provider);
       return provider;

@@ -65,7 +65,10 @@ export class RedisStorage implements IStorage {
   }
 
   public async deleteItem(key: string): Promise<void> {
-    if ( this.failsafeMode && this.connectionStatus === redisStatus.DISCONNECTED ) {
+    if (
+      this.failsafeMode &&
+      this.connectionStatus === redisStatus.DISCONNECTED
+    ) {
       return;
     }
     this.client.del(key);
@@ -73,7 +76,10 @@ export class RedisStorage implements IStorage {
   }
 
   public async clear(): Promise<void> {
-    if ( this.failsafeMode && this.connectionStatus === redisStatus.DISCONNECTED ) {
+    if (
+      this.failsafeMode &&
+      this.connectionStatus === redisStatus.DISCONNECTED
+    ) {
       return;
     }
     return this.client.flushdbAsync();
