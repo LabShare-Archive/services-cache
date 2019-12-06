@@ -16,7 +16,7 @@ export class CacheStrategyResolverProvider implements Provider<LabShareCache> {
   /**
    * @property {LabShareCacheConfig} cacheConfig - Cache configuration.
    */
-  @inject(CacheBindings.CACHE_CONFIG, {optional: false})
+  @inject(CacheBindings.CACHE_CONFIG, {optional: true})
   cacheConfig: LabShareCacheConfig;
 
   async value(): Promise<LabShareCache> {
