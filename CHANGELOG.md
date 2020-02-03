@@ -1,3 +1,14 @@
+## [2.0.1](https://github.com/LabShare/services-cache/compare/v2.0.0...v2.0.1) (2020-02-03)
+
+
+### Bug Fixes
+
+* configuration and code style ([32382de](https://github.com/LabShare/services-cache/commit/32382de78e134b670e41d4b5e12f675782582e05))
+* corrected readme and changed sequence of steps ([d9f7c69](https://github.com/LabShare/services-cache/commit/d9f7c699b5d3aee04d7bc27111258fc389213c20))
+* optional settings ([8875957](https://github.com/LabShare/services-cache/commit/8875957bde67a87af9d9275b412637ee238f3b7a))
+* removal of services-config ([6c6d722](https://github.com/LabShare/services-cache/commit/6c6d72238f2a994cece2626fa7a0b1b0bc9c51d9))
+* removal of services-config and fixes ([da55142](https://github.com/LabShare/services-cache/commit/da551426788b2ed1bd7be87f1bd24d052be2e1b9))
+
 # [2.0.0](https://github.com/LabShare/services-cache/compare/v1.1.0...v2.0.0) (2019-06-23)
 
 
