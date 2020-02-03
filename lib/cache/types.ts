@@ -14,3 +14,5 @@ export interface IOptions {
   noop?: boolean;
   refreshCache?: boolean;
 }
+
+export interface LabShareCacheConfig {}

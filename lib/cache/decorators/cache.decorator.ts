@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { CacheConstants } from '../constants/index';
+import {CacheConstants} from '../constants/index';
 
 export function Cache(options: any): Function {
   return function(
@@ -16,15 +16,21 @@ export function Cache(options: any): Function {
         !Array.isArray(args) || !args.length
           ? `${className}:${methodName}`
           : `${className}:${methodName}:${JSON.stringify(args)}`;
-      const cacheKey = !_.isEmpty(options.cacheKey) ? options.cacheKey : generatedCacheKey;
-      const cachingStrategy = _.get(global, CacheConstants.LABSHARE_CACHE, undefined);
+      const cacheKey = !_.isEmpty(options.cacheKey)
+        ? options.cacheKey
+        : generatedCacheKey;
+      const cachingStrategy = _.get(
+        global,
+        CacheConstants.LABSHARE_CACHE,
+        undefined,
+      );
 
       if (cachingStrategy) {
         if (options && options.noop) {
           return originalMethod.apply(this, args);
         }
       }
-      
+
       if (_.isUndefined(cachingStrategy)) {
         return;
       }

@@ -16,6 +16,8 @@ export namespace CacheBindings {
   export const CACHE_STRATEGY = BindingKey.create<LabShareCache>(
     'cache.strategy',
   );
+  // binding label for cache config
+  export const CACHE_CONFIG = BindingKey.create<LabShareCache>('cache.config');
   // binding label for redis storage
   export const REDIS_STORAGE = BindingKey.create<LabShareCache>(
     'redis.storage',
