@@ -6,41 +6,46 @@ import * as Assert from 'assert';
 
 Proxyquire.noCallThru();
 
-const clientMock = {
-    flushdbAsync: Sinon.fake(),
-    setItem: Sinon.fake(),
-    delAsync: Sinon.fake(),
-    getAsync: Sinon.fake(),
-// tslint:disable-next-line: no-unused-expression
-    on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
-};
-
-const RedisMock = {
-    createClient: () => clientMock,
-    RedisClient: {
-        prototype: {}
-    },
-    Multi: {
-        prototype: {}
-    }
-};
-const MockRedisStorage: typeof RedisStorage = Proxyquire.load('../../../../lib/cache/storages/redis.storage', {
-    'redis': RedisMock
-}).RedisStorage;
-
-const storage = new MockRedisStorage({
-    host: 'host',
-    port: 123,
-    password: 'pass'
-});
-
 describe('RedisStorage', () => {
+    let clientMock: any;
+    let RedisMock: any;
+    let MockRedisStorage: any;
+    let storage: any;
+
+    beforeEach(() => {
+        clientMock = {
+            flushdbAsync: Sinon.fake(),
+            setItem: Sinon.fake(),
+            delAsync: Sinon.fake(),
+            getAsync: Sinon.fake(),
+            on:  (event: string, listener: Function) => {
+                return event === 'connect' ? listener() : ''
+            }
+        };
+        RedisMock = {
+            createClient: () => clientMock,
+            RedisClient: {
+                prototype: {}
+            },
+            Multi: {
+                prototype: {}
+            }
+        };
+        MockRedisStorage = Proxyquire.load('../../../../lib/cache/storages/redis.storage', {
+            'redis': RedisMock
+        }).RedisStorage;
+        storage = new MockRedisStorage({
+            host: 'host',
+            port: 123,
+            password: 'pass'
+        });
+    });
     
-    it('Should clear Redis without errors', async () => {
+    it('should clear Redis without errors', async () => {
         await storage.clear();
     });
 
-    it('Should delete cache item if set to undefined', async () => {
+    it('should delete cache item if set to undefined', async () => {
         await storage.setItem('test', undefined);
         Assert.strictEqual(clientMock.delAsync.called, true);
         Assert.strictEqual(clientMock.delAsync.calledWith('test'), true);
@@ -48,25 +53,22 @@ describe('RedisStorage', () => {
     });
 
 
-    it('Should return undefined if cache not hit', async () => {
+    it('should return undefined if cache not hit', async () => {
         await storage.clear();
         const item = await storage.getItem('item123');
 
         Assert.strictEqual(item, undefined);
     });
 
-    it('Should throw an Error if connection to redis fails', async () => {
-// tslint:disable-next-line: no-shadowed-variable
-        const clientMock = {
+    it('should throw an Error if connection to redis fails', async () => {
+        clientMock = {
             flushdbAsync: Sinon.stub().rejects(new Error('Redis connection failed')),
             setItem: Sinon.fake(),
             delAsync: Sinon.fake(),
             getAsync: Sinon.fake(),
-// tslint:disable-next-line: no-unused-expression
-            on: (event: string, listener: Function) => { event === 'connect' ? listener() : '' }
+            on: (event: string, listener: Function) => { return event === 'connect' ? listener() : '' }
         };
-// tslint:disable-next-line: no-shadowed-variable
-        const RedisMock = {
+        RedisMock = {
             createClient: () => clientMock,
             RedisClient: {
                 prototype: {}
@@ -86,7 +88,7 @@ describe('RedisStorage', () => {
             connect_timeout: 1000
         });
 
-        const errorMsg = 'Should have thrown an error, but did not';
+        const errorMsg = 'should have thrown an error, but did not';
         try {
             await testStorage.clear();
             await Promise.reject(errorMsg);

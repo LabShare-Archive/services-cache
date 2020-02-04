@@ -31,7 +31,7 @@ class TestClassTwo {
 
 describe('CacheDecorator - MemoryStorage', () => {
 
-    beforeEach(async () => {
+    beforeEach(() => {
         strategy = new LabShareCache(new MemoryStorage());
         _.set(global, 'LABSHARE_CACHE', strategy);
         
@@ -45,7 +45,7 @@ describe('CacheDecorator - MemoryStorage', () => {
     it('Should cache function call correctly', async () => {
         const myClass = new TestClassOne();
 
-        const users = await myClass.getUsers();
+        const users = myClass.getUsers();
         Assert.strictEqual(data, users);
         Assert.strictEqual(await strategy.getItem<string[]>('TestClassOne:getUsers'), data);
     });

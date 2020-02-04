@@ -36,7 +36,7 @@
       ]
     },
     "include": [
-      "lib/cache/**/*"
+      "lib/cache/**/*", "test/**/*"
     ],
     "exclude": [
       "node_modules"

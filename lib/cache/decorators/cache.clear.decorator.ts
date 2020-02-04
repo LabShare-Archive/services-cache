@@ -1,17 +1,18 @@
 import * as _ from 'lodash';
 import {IOptions} from '../types';
 import {CacheConstants} from '../constants/index';
+import {IStorage} from '../storages/IStorage';
 
 export function CacheClear(options: IOptions): Function {
   return function(
-    target: any,
+    target: Object,
     methodName: string,
     descriptor: PropertyDescriptor,
   ) {
     const className = target.constructor.name;
 
     descriptor.value = async function(...args: any[]) {
-      const cachingStrategy = _.get(
+      const cachingStrategy: IStorage = _.get(
         global,
         CacheConstants.LABSHARE_CACHE,
         undefined,
@@ -27,7 +28,7 @@ export function CacheClear(options: IOptions): Function {
       // If there is no client, no-op is enabled (else we would have thrown before),
       // just return the result of the decorated method (no caching)
       if (!cachingStrategy) {
-        if (options && options.noop) {
+        if (options?.noop) {
           return descriptor.value!.apply(this, args);
         }
       }
@@ -35,10 +36,9 @@ export function CacheClear(options: IOptions): Function {
       const entry = await cachingStrategy.getItem(hashKey);
 
       if (entry) {
-        return await cachingStrategy.deleteItem(hashKey);
-      } else {
-        return;
+        await cachingStrategy.deleteItem(hashKey);
       }
+      return;
     };
     return descriptor;
   };
