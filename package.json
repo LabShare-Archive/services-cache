@@ -31,7 +31,6 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc npm run test",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

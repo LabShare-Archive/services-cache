@@ -20,7 +20,7 @@ before_install:
   - 'docker run -d -p 6379:6379 services-cache'
 script:
   - npm run build
-  - npm run coverage
+  - npm run test
 notifications:
   email: false
 branches:
