@@ -1,3 +1,12 @@
+## [2.0.2](https://github.com/LabShare/services-cache/compare/v2.0.1...v2.0.2) (2020-02-04)
+
+
+### Bug Fixes
+
+* unit test fixes ([0ae2341](https://github.com/LabShare/services-cache/commit/0ae2341818bb281e900ce07950f511cf347e56fc))
+* update dependencies ([2b61db0](https://github.com/LabShare/services-cache/commit/2b61db0966913876907e55ee42f5ecbe98fd196d))
+* update to new @loopback/build ([7dea2b0](https://github.com/LabShare/services-cache/commit/7dea2b0a254dd22d573037d94d2cd9c6b8779e5f))
+
 ## [2.0.1](https://github.com/LabShare/services-cache/compare/v2.0.0...v2.0.1) (2020-02-03)
 
 
