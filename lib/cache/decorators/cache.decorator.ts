@@ -3,13 +3,12 @@ import {CacheConstants} from '../constants/index';
 
 export function Cache(options: any): Function {
   return function(
-    target: any,
+    target: Object,
     methodName: string,
     descriptor: PropertyDescriptor,
   ) {
     const originalMethod = descriptor.value;
     const className = target.constructor.name;
-    debugger;
 
     descriptor.value = async function(...args: any[]) {
       const generatedCacheKey =
@@ -26,7 +25,7 @@ export function Cache(options: any): Function {
       );
 
       if (cachingStrategy) {
-        if (options && options.noop) {
+        if (options?.noop) {
           return originalMethod.apply(this, args);
         }
       }
@@ -38,7 +37,7 @@ export function Cache(options: any): Function {
       const entry = await cachingStrategy.getItem(cacheKey);
 
       if (cachingStrategy) {
-        if (options && options.refreshCache && entry) {
+        if (options?.refreshCache && entry) {
           await cachingStrategy.deleteItem(cacheKey);
         }
       }
@@ -49,7 +48,7 @@ export function Cache(options: any): Function {
 
       const methodCall = originalMethod.apply(this, args);
       let methodResult;
-      if (methodCall && methodCall.then) {
+      if (methodCall?.then) {
         methodResult = await methodCall;
       } else {
         methodResult = methodCall;

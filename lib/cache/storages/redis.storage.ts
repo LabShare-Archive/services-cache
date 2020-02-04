@@ -16,9 +16,9 @@ enum redisStatus {
 export class RedisStorage implements IStorage {
   private client: RedisClient;
   private connectionStatus: redisStatus = redisStatus.DISCONNECTED;
-  private failsafeMode: boolean = true;
+  private failsafeMode = true;
 
-  constructor(redisOptions: ClientOpts, failsafeMode: boolean = true) {
+  constructor(redisOptions: ClientOpts, failsafeMode = true) {
     this.failsafeMode = failsafeMode;
     this.client = Redis.createClient(redisOptions);
 
@@ -46,13 +46,12 @@ export class RedisStorage implements IStorage {
     }
   }
 
-  public async getItem<T>(key: string | undefined): Promise<T> {
+  public async getItem<T>(key: string | undefined): Promise<T> | undefined {
     const entry: any = await this.client.getAsync(key);
-    let finalItem = entry;
-    try {
-      finalItem = JSON.parse(entry);
-    } catch (error) {}
-    return finalItem;
+    if (_.isString(entry)) {
+      return JSON.parse(entry);
+    }
+    return entry;
   }
 
   public async setItem(key: string, content: any): Promise<void> {

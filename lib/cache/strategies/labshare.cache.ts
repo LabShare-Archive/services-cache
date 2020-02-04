@@ -54,7 +54,7 @@ export class LabShareCache extends AbstractBaseStrategy {
 
   public async deleteItem(key: string): Promise<void> {
     const item = await this.storage.getItem<IExpiringCacheItem>(key);
-    if (item && item.meta) {
+    if (item?.meta) {
       await this.storage.deleteItem(key);
       return;
     }
