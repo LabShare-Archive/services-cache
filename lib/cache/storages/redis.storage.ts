@@ -46,9 +46,12 @@ export class RedisStorage implements IStorage {
     }
   }
 
-  public async getItem<T>(key: string | undefined): Promise<T> {
+  public async getItem<T>(key: string | undefined): Promise<T> | undefined {
     const entry: any = await this.client.getAsync(key);
-    return JSON.parse(entry);
+    if (_.isString(entry)) {
+      return JSON.parse(entry);
+    }
+    return entry;
   }
 
   public async setItem(key: string, content: any): Promise<void> {
