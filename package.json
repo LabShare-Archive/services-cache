@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "4.16.3",
-    "lodash": "4.17.10",
+    "lodash": "4.17.15",
     "q": "1.5.1",
     "redis": "2.8.0"
   },
@@ -29,7 +29,6 @@
     "@commitlint/config-conventional": "^7.0.1",
     "husky": "^0.14.3",
     "coveralls": "^3.0.1",
-    "@labshare/semantic-release-config": "^1.0.0",
     "semantic-release": "^15.5.0"
   },
   "scripts": {
@@ -39,6 +38,16 @@
     "semantic-release": "semantic-release"
   },
   "release": {
-    "extends": "@labshare/semantic-release-config"
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git"
+    ]
   }
 }
