@@ -21,10 +21,6 @@ before_install:
 script:
   - npm run build
   - npm run coverage
-cache:
-  directories:
-    - ~/.npm
-    - node_modules
 notifications:
   email: false
 branches:
