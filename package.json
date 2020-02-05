@@ -51,7 +51,7 @@
       "@semantic-release/npm",
       "@semantic-release/git"
     ],
-    "branch": "1x"
+    "branches": ["master", "1x"]
   },
   "publishConfig": {
     "tag": "1x"
