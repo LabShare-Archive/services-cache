@@ -50,6 +50,10 @@
       "@semantic-release/changelog",
       "@semantic-release/npm",
       "@semantic-release/git"
-    ]
+    ],
+    "branch": "1x"
+  },
+  "publishConfig": {
+    "tag": "1x"
   }
 }
