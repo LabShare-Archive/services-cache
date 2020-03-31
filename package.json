@@ -39,7 +39,7 @@
     "@loopback/core": "^1.7.0",
     "@loopback/openapi-v3-types": "^1.0.19",
     "@loopback/rest": "^1.11.2",
-    "@loopback/testlab": "1.2.8",
+    "@loopback/testlab": "1.10.3",
     "@types/lodash": "^4.14.126",
     "@types/node": "^10.11.2",
     "@types/passport": "^1.0.0",
