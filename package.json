@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@loopback/authentication": "^2.0.3",
-    "@loopback/context": "1.16.0",
+    "@loopback/context": "1.25.1",
     "@loopback/core": "^1.7.0",
     "@loopback/openapi-v3-types": "^1.0.19",
     "@loopback/rest": "^1.11.2",
