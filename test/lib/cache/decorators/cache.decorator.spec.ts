@@ -30,7 +30,7 @@ class TestClassTwo {
 
 describe('CacheDecorator - MemoryStorage', () => {
   beforeEach(() => {
-    strategy = new LabShareCache(new MemoryStorage());
+    strategy = new LabShareCache({});
     _.set(global, 'LABSHARE_CACHE', strategy);
   });
 

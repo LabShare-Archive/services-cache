@@ -52,8 +52,8 @@ Create a Config folder in the root and add config file under config/default.json
     "services":
     {
     "cache": {
-      "strategy": "redis",
-      "redisOptions": {
+      "type": "redis",
+      "settings": {
         "host": "ec2-52-90-18-4.compute-2.amazonaws.com", // eg : redis server 
         "port": 6379
       }
@@ -71,7 +71,7 @@ const config = require('config');
 // if redis 
 const myRedisCache = new LabShareCache(config.get('services.cache'));
 // if memory 
-// change strategy to memory
+// change type to memory
 
 const memoryCache = new LabShareCache(config.get('services.cache'));
 
@@ -126,27 +126,17 @@ export class LbServicesExampleApplication
 constructor(options: ApplicationConfig = {}){
   // binding
     this.bind(CacheBindings.CACHE_CONFIG).to({
-      "strategy": "redis",
-      "redisOptions": {
+      "type": "redis",
+      "settings": {
         "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
         "port": 6379
       }
     });
 this.component(ServicesCache); // Method implementation ...
-this.loadCacheStrategy(); // loading cache strategy
   }
 }
 ...
   ...
-
-  private async loadCacheStrategy() {
-    await super.boot();
-    try {
-      await this.get(CACHE_STRATEGY);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
 ```
 ### Step 2 : With decorator
@@ -155,7 +145,7 @@ this.loadCacheStrategy(); // loading cache strategy
 Caches function response using the given options. Works with different strategies and storages. Uses all arguments to build an unique key.
 
 `@Cache(options)`
-- `options`: Options passed to the strategy for this particular method
+- `options`: Options passed to the cache provider for this particular method
 
 *Note: @Cache always converts the method response to a promise because caching might be async.* 
 
@@ -174,26 +164,29 @@ class MyService {
 ## Directly in the code with loopback application.
 
 ```ts
-import { LabShareCache, MemoryStorage } from "@labshare/services-cache";
+import { LabShareCache } from "@labshare/services-cache";
 
-const memoryCache = new LabShareCache({});
+
 
 class MyService {
-    
+    constructor(
+    @inject(CacheBindings.CACHE)
+    private cache: LabShareCache,
+  ) {}
     public async getShipToUsers(): Promise<string[]> {
-        const cachedUsers = await memoryCache.getItem<string[]>("users");
+        const cachedUsers = await cache.getItem<string[]>("users");
         if (cachedUsers) {
             return cachedUsers;
         }
 
         const newUsers = ["John", "Doe"];
-        await memoryCache.setItem("users", newUsers, {  ttl: 60 });
+        await cache.setItem("users", newUsers, {  ttl: 60 });
         return newUsers;
     }
 }
 ```
 
-# Strategies
+# Types
 ## LabShareCache
 Cached items expire after a given amount of time.
 

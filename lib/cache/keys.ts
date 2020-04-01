@@ -13,17 +13,7 @@ export interface CacheRequest {
 // namespace for binding cache
 export namespace CacheBindings {
   // binding label for cache strategy
-  export const CACHE_STRATEGY = BindingKey.create<LabShareCache>(
-    'cache.strategy',
-  );
+  export const CACHE = BindingKey.create<LabShareCache>('cache.cache');
   // binding label for cache config
   export const CACHE_CONFIG = BindingKey.create<LabShareCache>('cache.config');
-  // binding label for redis storage
-  export const REDIS_STORAGE = BindingKey.create<LabShareCache>(
-    'redis.storage',
-  );
-  // binding label for memory storage
-  export const MEMORY_STORAGE = BindingKey.create<LabShareCache>(
-    'memory.storage',
-  );
 }

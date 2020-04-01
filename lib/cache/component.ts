@@ -7,6 +7,6 @@ import {CacheStrategyResolverProvider} from './providers';
  */
 export class ServicesCache implements Component {
   providers?: ProviderMap = {
-    [CacheBindings.CACHE_STRATEGY.key]: CacheStrategyResolverProvider,
+    [CacheBindings.CACHE.key]: CacheStrategyResolverProvider,
   };
 }

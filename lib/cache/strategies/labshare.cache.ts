@@ -15,15 +15,12 @@ export class LabShareCache {
     if (
       _.get(
         this.cacheConfig,
-        CacheConstants.CACHE_STRATEGY,
+        CacheConstants.CACHE_TYPE,
         CacheConstants.MEMORY,
       ) === CacheConstants.REDIS
     ) {
-      const redisOptions = _.get(
-        this.cacheConfig,
-        CacheConstants.REDIS_OPTIONS,
-      );
-      provider = new RedisStorage(redisOptions);
+      const settings = _.get(this.cacheConfig, CacheConstants.SETTINGS);
+      provider = new RedisStorage(settings);
       // for global decorators
       _.set(global, CacheConstants.LABSHARE_CACHE, provider);
       return provider;

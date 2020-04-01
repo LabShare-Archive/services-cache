@@ -13,20 +13,20 @@ const data: ITestType = {
 
 describe('LabShareCache', () => {
   it('Should set cache item correctly with isLazy and isCachedForever ', async () => {
-    const cacher = new LabShareCache({strategy: 'memory'});
+    const cacher = new LabShareCache({type: 'memory'});
     await cacher.setItem('test', data, {ttl: 100, isCachedForever: true});
     const entry = await cacher.getItem<ITestType>('test');
     Assert.deepStrictEqual(entry, data);
   });
   it('Should set cache item correctly with isLazy', async () => {
-    const cacher = new LabShareCache({strategy: 'memory'});
+    const cacher = new LabShareCache({type: 'memory'});
     await cacher.setItem('test', data, {ttl: 100});
     const entry = await cacher.getItem<ITestType>('test');
     Assert.deepStrictEqual(entry, data);
   });
 
   it('Should return no item if cache expires istantly with isLazy', async () => {
-    const cacher = new LabShareCache({strategy: 'memory'});
+    const cacher = new LabShareCache({type: 'memory'});
 
     await cacher.setItem('test', data, {ttl: -1});
     const entry = await cacher.getItem<ITestType>('test');
@@ -34,7 +34,7 @@ describe('LabShareCache', () => {
   });
 
   it('Should not find cache item after ttl with isLazy disabled', async () => {
-    const cacher = new LabShareCache({strategy: 'memory'});
+    const cacher = new LabShareCache({type: 'memory'});
 
     await cacher.setItem('test', data, {ttl: 0.001, isLazy: false});
     await wait(10);
@@ -44,7 +44,7 @@ describe('LabShareCache', () => {
   });
 
   it('Should ignore isLazy and ttl options if isCachedForever option is provided and cache forever', async () => {
-    const cacher = new LabShareCache({strategy: 'memory'});
+    const cacher = new LabShareCache({type: 'memory'});
 
     await cacher.setItem('test', data, {
       ttl: 0,
