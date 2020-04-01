@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
-import {IOptions} from '../types';
+import {Options} from '../types';
 import {CacheConstants} from '../constants/index';
-import {IStorage} from '../storages/IStorage';
+import {StorageProvider} from '../storages/storage-provider';
 
-export function CacheClear(options: IOptions): Function {
+export function CacheClear(options: Options): Function {
   return function(
     target: Object,
     methodName: string,
@@ -12,7 +12,7 @@ export function CacheClear(options: IOptions): Function {
     const className = target.constructor.name;
 
     descriptor.value = async function(...args: any[]) {
-      const cachingStrategy: IStorage = _.get(
+      const cachingStrategy: StorageProvider = _.get(
         global,
         CacheConstants.LABSHARE_CACHE,
         undefined,

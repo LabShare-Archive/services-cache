@@ -1,5 +1,5 @@
 import {BindingKey} from '@loopback/context';
-import {LabShareCache} from './strategies/labshare.cache';
+import {LabShareCache} from './labshare.cache';
 import {Request, Response} from '@loopback/rest';
 
 /**

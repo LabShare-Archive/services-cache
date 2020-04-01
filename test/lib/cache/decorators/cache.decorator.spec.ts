@@ -1,11 +1,9 @@
-import {MemoryStorage} from '../../../../lib/cache/storages/memory.storage';
-
-import {LabShareCache} from '../../../../lib/cache/strategies/labshare.cache';
+import {LabShareCache} from '../../../../lib/cache/labshare.cache';
 import * as Assert from 'assert';
 import {Cache} from '../../../../lib/cache/decorators/cache.decorator';
 import * as _ from 'lodash';
 const data = ['user', 'max', 'test'];
-let strategy: LabShareCache = new LabShareCache(new MemoryStorage());
+let strategy: LabShareCache = new LabShareCache({});
 
 class TestClassOne {
   @Cache({ttl: 1000})

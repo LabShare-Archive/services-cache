@@ -1,6 +1,6 @@
-import {IStorage} from './IStorage';
+import {StorageProvider} from './storage-provider';
 
-export class MemoryStorage implements IStorage {
+export class MemoryStorage implements StorageProvider {
   private memCache: any = {};
 
   constructor() {}

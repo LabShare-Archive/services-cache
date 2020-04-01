@@ -1,6 +1,6 @@
 import {RedisStorage} from './storages/redis.storage';
 import {MemoryStorage} from './storages/memory.storage';
-import {LabShareCache} from './strategies/labshare.cache';
+import {LabShareCache} from './labshare.cache';
 import {ServicesCache} from './component';
 import {CacheStrategyResolverProvider} from './providers';
 import {CacheBindings, CacheRequest} from './keys';
