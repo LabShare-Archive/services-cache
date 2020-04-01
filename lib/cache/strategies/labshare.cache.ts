@@ -1,12 +1,37 @@
 import {IStorage} from '../storages/IStorage';
-import {AbstractBaseStrategy} from './abstract.base.strategy';
 import {IOptions, IExpiringCacheItem} from '../types';
 import {CacheConstants} from '../constants/index';
 import * as _ from 'lodash';
+import {RedisStorage} from '../storages/redis.storage';
+import {MemoryStorage} from '../storages/memory.storage';
 
-export class LabShareCache extends AbstractBaseStrategy {
-  constructor(storage: IStorage) {
-    super(storage);
+export class LabShareCache {
+  private storage: IStorage;
+  constructor(public cacheConfig: any) {
+    this.storage = this.createCacheClient();
+  }
+  private createCacheClient(): any {
+    let provider;
+    if (
+      _.get(
+        this.cacheConfig,
+        CacheConstants.CACHE_STRATEGY,
+        CacheConstants.MEMORY,
+      ) === CacheConstants.REDIS
+    ) {
+      const redisOptions = _.get(
+        this.cacheConfig,
+        CacheConstants.REDIS_OPTIONS,
+      );
+      provider = new RedisStorage(redisOptions);
+      // for global decorators
+      _.set(global, CacheConstants.LABSHARE_CACHE, provider);
+      return provider;
+    }
+    provider = new MemoryStorage();
+    // for global decorators
+    _.set(global, CacheConstants.LABSHARE_CACHE, provider);
+    return provider;
   }
 
   public async getItem<T>(key: string): Promise<T> {

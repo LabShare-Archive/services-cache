@@ -64,15 +64,16 @@ Create a Config folder in the root and add config file under config/default.json
 ### Step: 2
 
 ```ts
-import {RedisStorage, LabShareCache} from "@labshare/services-cache";
+import {LabShareCache} from "@labshare/services-cache";
 const config = require('config');
 ...
 ...
 // if redis 
-const myRedisCache = new LabShareCache(new RedisStorage(config.get('services.cache.redisOptions')));
+const myRedisCache = new LabShareCache(config.get('services.cache'));
 // if memory 
+// change strategy to memory
 
-const memoryCache = new LabShareCache(new MemoryStorage());
+const memoryCache = new LabShareCache(config.get('services.cache'));
 
 class MyService {
     
@@ -175,7 +176,7 @@ class MyService {
 ```ts
 import { LabShareCache, MemoryStorage } from "@labshare/services-cache";
 
-const memoryCache = new LabShareCache(new MemoryStorage());
+const memoryCache = new LabShareCache({});
 
 class MyService {
     

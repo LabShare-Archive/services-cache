@@ -19,9 +19,10 @@
   "license": "MIT",
   "scripts": {
     "build": "lb-tsc",
-    "test": "nyc --report-dir=./coverage mocha 'dist/test/**/*.js'",
+    "test": "mocha 'dist/test/**/*.js'",
+    "test:ci": "nyc --report-dir=./coverage mocha 'dist/test/**/*.js'",
     "prepublish": "tsc -p .",
-    "prepare": "tsc -p .",
+    "prepare": "npm run snyk-protect && tsc -p .",
     "dev": "tsc -p . -w",
     "lint": "npm run prettier:check && npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
@@ -31,15 +32,16 @@
     "eslint": "lb-eslint --report-unused-disable-directives .",
     "eslint:fix": "npm run eslint -- --fix",
     "coverage:ci": "node packages/build/bin/run-nyc report --reporter=text-lcov | coveralls",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
-    "@loopback/authentication": "^2.0.3",
+    "@loopback/authentication": "^2.2.2",
     "@loopback/context": "1.16.0",
     "@loopback/core": "^1.7.0",
     "@loopback/openapi-v3-types": "^1.0.19",
-    "@loopback/rest": "^1.11.2",
-    "@loopback/testlab": "1.2.8",
+    "@loopback/rest": "^1.24.0",
+    "@loopback/testlab": "^1.2.8",
     "@types/lodash": "^4.14.126",
     "@types/node": "^10.11.2",
     "@types/passport": "^1.0.0",
@@ -48,13 +50,14 @@
     "express": "4.16.3",
     "lodash": "^4.17.15",
     "q": "1.5.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "snyk": "^1.305.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
     "@labshare/semantic-release-config": "^1.0.0",
-    "@loopback/build": "^3.1.0",
+    "@loopback/build": "^4.0.1",
     "@loopback/eslint-config": "^5.0.2",
     "@types/bluebird": "^3.5.24",
     "@types/chai": "^4.1.7",
@@ -77,7 +80,7 @@
     "istanbul": "0.4.5",
     "jasmine": "3.1.0",
     "lerna": "^3.14.1",
-    "mocha": "^7.0.1",
+    "mocha": "^6.2.3",
     "proxyquire": "^2.1.0",
     "semantic-release": "^15.5.0",
     "sinon": "^7.2.2",
@@ -101,5 +104,6 @@
     "hooks": {
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "snyk": true
 }
