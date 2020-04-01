@@ -53,7 +53,7 @@ Create a Config folder in the root and add config file under config/default.json
     {
     "cache": {
       "type": "redis",
-      "settings": {
+      "redis": {
         "host": "ec2-52-90-18-4.compute-2.amazonaws.com", // eg : redis server 
         "port": 6379
       }
@@ -127,7 +127,7 @@ constructor(options: ApplicationConfig = {}){
   // binding
     this.bind(CacheBindings.CACHE_CONFIG).to({
       "type": "redis",
-      "settings": {
+      "redis": {
         "host": "redis", // eg : redis server ec2-52-90-18-4.compute-1.amazonaws.com
         "port": 6379
       }
