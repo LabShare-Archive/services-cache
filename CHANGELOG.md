@@ -1,3 +1,18 @@
+# [2.1.0](https://github.com/LabShare/services-cache/compare/v2.0.2...v2.1.0) (2020-04-02)
+
+
+### Bug Fixes
+
+* changed from strategy to type ([d4f0ac8](https://github.com/LabShare/services-cache/commit/d4f0ac81806a83c75154be01aaa9d4e1c21830a5))
+* renaming ([3689f20](https://github.com/LabShare/services-cache/commit/3689f202e622ca46078d20f9c6f85e2d29d351e4))
+* types ([90da1bc](https://github.com/LabShare/services-cache/commit/90da1bcb0774fcc056d820cc553aedb876492992))
+* unused class removed ([8e10de3](https://github.com/LabShare/services-cache/commit/8e10de36948b5b036d4195957dcd6dcaeace5021))
+
+
+### Features
+
+* class refactored with configuration ([154e73f](https://github.com/LabShare/services-cache/commit/154e73fb806e119841fe3020cbf9244bf553e8b0))
+
 ## [2.0.2](https://github.com/LabShare/services-cache/compare/v2.0.1...v2.0.2) (2020-02-04)
 
 
