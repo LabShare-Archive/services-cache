@@ -1,12 +1,12 @@
-interface ICacheEntry {
+interface CacheEntry {
   content: any;
   meta: any;
 }
 
-export interface IStorage {
+export interface StorageProvider {
   getItem<T>(key: string): Promise<T>;
 
-  setItem(key: string, content: ICacheEntry): Promise<void>;
+  setItem(key: string, content: CacheEntry): Promise<void>;
 
   deleteItem(key: string): Promise<void>;
 

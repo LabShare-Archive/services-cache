@@ -1,0 +1,49 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-LODASH-450202:
+    - '@loopback/build > strong-docs > dox > jsdoctypeparser > lodash':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-LODASH-73638:
+    - '@loopback/build > strong-docs > dox > jsdoctypeparser > lodash':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-LODASH-73639:
+    - '@loopback/build > strong-docs > dox > jsdoctypeparser > lodash':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-MARKDOWNIT-459438:
+    - '@loopback/build > strong-docs > dox > markdown-it':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-MARKED-174116:
+    - '@loopback/build > strong-docs > typedoc > marked':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-MARKED-451341:
+    - '@loopback/build > strong-docs > typedoc > marked':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+    - '@loopback/build > strong-docs > marked':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+  SNYK-JS-MINIMIST-559764:
+    - '@loopback/build > strong-docs > optimist > minimist':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+    - '@loopback/build > strong-docs > typedoc > handlebars > optimist > minimist':
+        reason: None given
+        expires: '2020-05-01T00:23:24.146Z'
+    - '@loopback/build > nyc > istanbul-reports > handlebars > optimist > minimist':
+        reason: None given
+        expires: '2020-05-01T00:23:24.147Z'
+    - '@loopback/build > strong-docs > typedoc > @types/handlebars > handlebars > optimist > minimist':
+        reason: None given
+        expires: '2020-05-01T00:23:24.147Z'
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:lodash:20180130':
+    - '@loopback/build > strong-docs > dox > jsdoctypeparser > lodash':
+        patched: '2020-04-01T00:19:20.781Z'

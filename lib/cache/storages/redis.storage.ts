@@ -1,4 +1,4 @@
-import {IStorage} from './IStorage';
+import {StorageProvider} from './storage-provider';
 import * as Bluebird from 'bluebird';
 import * as Redis from 'redis';
 import {ClientOpts} from 'redis';
@@ -13,33 +13,29 @@ enum redisStatus {
   DISCONNECTED = 'disconnected',
 }
 
-export class RedisStorage implements IStorage {
+export class RedisStorage implements StorageProvider {
   private client: RedisClient;
   private connectionStatus: redisStatus = redisStatus.DISCONNECTED;
-  private failsafeMode = true;
 
-  constructor(redisOptions: ClientOpts, failsafeMode = true) {
-    this.failsafeMode = failsafeMode;
+  constructor(redisOptions: ClientOpts) {
     this.client = Redis.createClient(redisOptions);
 
     try {
-      if (failsafeMode) {
-        this.client.on('connect', () => {
-          this.connectionStatus = redisStatus.CONNECTED;
-        });
-        this.client.on('ready', () => {
-          this.connectionStatus = redisStatus.CONNECTED;
-        });
-        this.client.on('reconnecting', () => {
-          this.connectionStatus = redisStatus.DISCONNECTED;
-        });
-        this.client.on('end', () => {
-          this.connectionStatus = redisStatus.DISCONNECTED;
-        });
-        this.client.on('error', () => {
-          this.connectionStatus = redisStatus.DISCONNECTED;
-        });
-      }
+      this.client.on('connect', () => {
+        this.connectionStatus = redisStatus.CONNECTED;
+      });
+      this.client.on('ready', () => {
+        this.connectionStatus = redisStatus.CONNECTED;
+      });
+      this.client.on('reconnecting', () => {
+        this.connectionStatus = redisStatus.DISCONNECTED;
+      });
+      this.client.on('end', () => {
+        this.connectionStatus = redisStatus.DISCONNECTED;
+      });
+      this.client.on('error', () => {
+        this.connectionStatus = redisStatus.DISCONNECTED;
+      });
     } catch (error) {
       console.error('connection error', error);
       throw error;
@@ -64,10 +60,7 @@ export class RedisStorage implements IStorage {
   }
 
   public async deleteItem(key: string): Promise<void> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
+    if (this.connectionStatus === redisStatus.DISCONNECTED) {
       return;
     }
     this.client.del(key);
@@ -75,10 +68,7 @@ export class RedisStorage implements IStorage {
   }
 
   public async clear(): Promise<void> {
-    if (
-      this.failsafeMode &&
-      this.connectionStatus === redisStatus.DISCONNECTED
-    ) {
+    if (this.connectionStatus === redisStatus.DISCONNECTED) {
       return;
     }
     return this.client.flushdbAsync();
