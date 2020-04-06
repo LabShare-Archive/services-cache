@@ -1,7 +1,7 @@
-import {RedisStorage} from '../../../../lib/cache/storages/redis.storage';
 import * as Proxyquire from 'proxyquire';
 import * as Sinon from 'sinon';
 import * as Assert from 'assert';
+import {RedisStorage} from '../../../../storages/redis.storage';
 
 Proxyquire.noCallThru();
 
@@ -30,12 +30,9 @@ describe('RedisStorage', () => {
         prototype: {},
       },
     };
-    MockRedisStorage = Proxyquire.load(
-      '../../../../lib/cache/storages/redis.storage',
-      {
-        redis: RedisMock,
-      },
-    ).RedisStorage;
+    MockRedisStorage = Proxyquire.load('../../../../storages/redis.storage', {
+      redis: RedisMock,
+    }).RedisStorage;
     storage = new MockRedisStorage({
       host: 'host',
       port: 123,
@@ -81,7 +78,7 @@ describe('RedisStorage', () => {
       },
     };
     const MockRedisFailStorage: typeof RedisStorage = Proxyquire.load(
-      '../../../../lib/cache/storages/redis.storage',
+      '../../../../storages/redis.storage',
       {
         redis: RedisMock,
       },

@@ -1,46 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
-
-    "compilerOptions": {
-      "target": "es2018",
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "noEmitOnError": true,
-      "allowSyntheticDefaultImports": true,
-      "allowUnreachableCode": false,
-      "allowJs": false,
-      "allowUnusedLabels": false,
-      "noImplicitReturns": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noImplicitUseStrict": true,
-      "removeComments": true,
-      "strictNullChecks": false,
-      "outDir": "./dist",
-      "declaration": false,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "noImplicitAny": true,
-      "resolveJsonModule": true,
-      "types": ["jest", "node"],
-      "typeRoots": [
-        "./typings/globals/",
-        "./typings/modules/",
-        "node_modules/@types"
-      ],
-      "lib": [
-        "es2018",
-        "dom",
-        "esnext.asynciterable"
-      ]
-    },
-    "include": [
-      "lib/cache/**/*", "test/**/*"
-    ],
-    "exclude": [
-      "node_modules"
-    ],
-    "compileOnSave": true
-   
+  "extends": "@loopback/build/config/tsconfig.common.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "strictNullChecks": false
+  },
+  "include": ["src"]
 }

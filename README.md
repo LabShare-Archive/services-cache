@@ -52,10 +52,13 @@ Create a Config folder in the root and add config file under config/default.json
     "services":
     {
     "cache": {
-      "type": "redis",
+      "type": "redis", // specifies if memory ( default) or redis storage is being selected.
       "redis": {
         "host": "ec2-52-90-18-4.compute-2.amazonaws.com", // eg : redis server 
         "port": 6379
+      },
+      "memory":{
+        "isGlobalCache" : true
       }
     }
     }
@@ -198,14 +201,10 @@ Cached items expire after a given amount of time.
   
 # Storages
 
-*Note: For specific storages, client libraries must be installed:*
-
-| Storage      | Needed client library |
+| Storage      | Configuration |
 |--------------|:---------------------:|
-| RedisStorage |  `npm install redis`  |
-
-#### MemoryStorage()
-#### RedisStorage(`clientOpts:` [RedisClientOptions](https://github.com/NodeRedis/node_redis#options-object-properties))
+| Redis |  RedisStorage(`{redis}:` [RedisClientOptions](https://github.com/NodeRedis/node_redis#options-object-properties))  |
+| memory | MemoryStorage(`{memory}: isGlobalCache =true creates a global instance for local memory, if false is a local storage per instance`) |
 
 
 # Test

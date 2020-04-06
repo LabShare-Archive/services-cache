@@ -1,6 +1,6 @@
-import {LabShareCache} from '../../../../lib/cache/labshare.cache';
+import {LabShareCache} from '../../../../labshare.cache';
 import * as Assert from 'assert';
-import {Cache} from '../../../../lib/cache/decorators/cache.decorator';
+import {Cache} from '../../../../decorators/cache.decorator';
 import * as _ from 'lodash';
 const data = ['user', 'max', 'test'];
 let strategy: LabShareCache = new LabShareCache({});
