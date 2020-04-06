@@ -1,5 +1,5 @@
 import * as Assert from 'assert';
-import {LabShareCache} from '../../../../lib/cache/labshare.cache';
+import {LabShareCache} from '../../../../labshare.cache';
 
 interface ITestType {
   user: {

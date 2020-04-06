@@ -56,3 +56,6 @@ dist
 
 #vscode development
 devindex.js
+
+# Cache used by TypeScript's incremental build
+*.tsbuildinfo

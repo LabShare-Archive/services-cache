@@ -6,7 +6,7 @@ interface CacheEntry {
 export interface StorageProvider {
   getItem<T>(key: string): Promise<T>;
 
-  setItem(key: string, content: CacheEntry): Promise<void>;
+  setItem(key: string, content: CacheEntry | undefined): Promise<void>;
 
   deleteItem(key: string): Promise<void>;
 

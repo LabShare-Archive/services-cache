@@ -13,35 +13,30 @@ export class LabShareCache {
   private createCacheClient(): StorageProvider {
     let provider;
     if (this.cacheConfig?.type === CacheType.REDIS) {
-      provider = new RedisStorage(this.cacheConfig?.redis);
+      provider = new RedisStorage(this.cacheConfig?.redis ?? {});
       // for global decorators
       _.set(global, CacheConstants.LABSHARE_CACHE, provider);
       return provider;
     }
-    provider = new MemoryStorage();
+    provider = new MemoryStorage(this.cacheConfig?.memory);
     // for global decorators
     _.set(global, CacheConstants.LABSHARE_CACHE, provider);
     return provider;
   }
 
-  public async getItem<T>(key: string): Promise<T> {
+  public async getItem<T>(key: string): Promise<T | undefined> {
     const item = await this.storage.getItem<ExpiringCacheItem>(key);
-    if (
-      item &&
-      _.has(item, 'meta') &&
-      _.has(item, 'meta.ttl') &&
-      this.isItemExpired(item)
-    ) {
+    if (item?.meta?.ttl && this.isItemExpired(item)) {
       await this.storage.setItem(key, undefined);
       return undefined;
     }
-    return item ? item.content : undefined;
+    return item?.content;
   }
 
   public async setItem(
     key: string,
     content: any,
-    options: Options,
+    options?: Options,
   ): Promise<void> {
     options = {
       ttl: CacheConstants.TTL_60_SEC,

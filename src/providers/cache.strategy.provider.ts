@@ -1,6 +1,7 @@
 import {inject, Provider} from '@loopback/context';
-import {LabShareCache, CacheBindings} from '../index';
+import {CacheBindings} from '../keys';
 import {LabShareCacheConfig} from '../types';
+import {LabShareCache} from '../labshare.cache';
 
 export class CacheStrategyResolverProvider implements Provider<LabShareCache> {
   constructor() {}

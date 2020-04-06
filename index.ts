@@ -1,1 +1,1 @@
-export * from './lib/cache';
+export * from './src';

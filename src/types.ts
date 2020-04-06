@@ -15,6 +15,10 @@ export interface Options {
   refreshCache?: boolean;
 }
 
+export interface MemoryConfig {
+  isGlobalCache?: boolean;
+}
+
 export class RedisConfig {
   [x: string]: any;
   host?: string;
@@ -29,6 +33,7 @@ export enum CacheType {
 export interface CacheConfig {
   type?: CacheType | string;
   redis?: RedisConfig;
+  memory?: MemoryConfig;
 }
 
 export interface LabShareCacheConfig {}

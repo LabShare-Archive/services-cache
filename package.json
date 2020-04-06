@@ -19,8 +19,8 @@
   "license": "MIT",
   "scripts": {
     "build": "lb-tsc",
-    "test": "mocha 'dist/test/**/*.js'",
-    "test:ci": "nyc --report-dir=./coverage mocha 'dist/test/**/*.js'",
+    "test": "mocha 'dist/__tests__/**/*.js'",
+    "test:ci": "nyc --report-dir=./coverage mocha 'dist/__tests__/**/*.js'",
     "prepublish": "tsc -p .",
     "prepare": "npm run snyk-protect && tsc -p .",
     "dev": "tsc -p . -w",
@@ -86,7 +86,7 @@
     "sinon": "^7.2.2",
     "supertest": "3.1.0",
     "ts-node": "^7.0.1",
-    "typescript": "^3.3.1"
+    "typescript": "^3.8.3"
   },
   "nyc": {
     "reporter": [

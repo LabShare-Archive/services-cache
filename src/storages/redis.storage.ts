@@ -5,8 +5,8 @@ import {ClientOpts} from 'redis';
 import {RedisClient} from '../custom';
 import * as _ from 'lodash';
 
-Bluebird.promisifyAll(Redis.RedisClient.prototype);
-Bluebird.promisifyAll(Redis.Multi.prototype);
+(Bluebird as any).promisifyAll(Redis.RedisClient.prototype);
+(Bluebird as any).promisifyAll(Redis.Multi.prototype);
 
 enum redisStatus {
   CONNECTED = 'connected',
@@ -42,7 +42,7 @@ export class RedisStorage implements StorageProvider {
     }
   }
 
-  public async getItem<T>(key: string | undefined): Promise<T> | undefined {
+  public async getItem<T>(key: string): Promise<T> {
     const entry: any = await this.client.getAsync(key);
     if (_.isString(entry)) {
       return JSON.parse(entry);

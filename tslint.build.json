@@ -1,8 +1,0 @@
-{
-  "$schema": "http://json.schemastore.org/tslint",
-  "extends": ["@loopback/tslint-config/tslint.build.json"],
-  "rules": {
-    "no-any": false,
-    "no-invalid-this": false
-}
-}
