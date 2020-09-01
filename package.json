@@ -51,7 +51,7 @@
     "lodash": "^4.17.16",
     "q": "1.5.1",
     "redis": "^2.8.0",
-    "snyk": "^1.305.0"
+    "snyk": "^1.317.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",

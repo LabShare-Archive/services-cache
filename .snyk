@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.14.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-LODASH-450202:
@@ -47,3 +47,70 @@ patch:
   'npm:lodash:20180130':
     - '@loopback/build > strong-docs > dox > jsdoctypeparser > lodash':
         patched: '2020-04-01T00:19:20.781Z'
+  SNYK-JS-LODASH-567746:
+    - lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/rest > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > inquirer > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-config > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/rest > strong-error-handler > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > strong-error-handler > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/ruby-semver > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/dep-graph > graphlib > lodash:
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/context > @loopback/metadata > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > @loopback/context > @loopback/metadata > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > @loopback/core > @loopback/context > @loopback/metadata > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
+    - '@loopback/authentication > @loopback/rest > @loopback/openapi-v3 > @loopback/repository-json-schema > @loopback/repository > loopback-datasource-juggler > loopback-connector > strong-globalize > lodash':
+        patched: '2020-05-05T01:16:40.866Z'
