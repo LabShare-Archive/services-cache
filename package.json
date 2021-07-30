@@ -2,7 +2,7 @@
   "name": "@labshare/services-cache",
   "namespace": "",
   "main": "./",
-  "version": "1.18.508",
+  "version": "1.18.509",
   "description": "LabShare Cache Services",
   "contributors": "https://github.com/LabShare/services-cache/graphs/contributors",
   "repository": {
