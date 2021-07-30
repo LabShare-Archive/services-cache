@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "4.16.3",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "q": "1.5.1",
     "redis": "2.8.0"
   },
@@ -51,7 +51,10 @@
       "@semantic-release/npm",
       "@semantic-release/git"
     ],
-    "branches": ["master", "1x"]
+    "branches": [
+      "master",
+      "1x"
+    ]
   },
   "publishConfig": {
     "tag": "1x"
