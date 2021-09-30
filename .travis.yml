@@ -15,14 +15,17 @@ before_install:
         echo "//registry.npmjs.org/:_authToken=\${NPM_INSTALL_TOKEN}" > ~/.npmrc;
     fi
   - 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
+script:
   - npm install -g @labshare/lsc codecov
   - docker build -t services-cache ./run
   - 'docker run -d -p 6379:6379 services-cache'
-script:
   - npm run build
   - npm run test:ci
 notifications:
   email: false
+matrix:
+    allow_failures:
+      - node_js: node
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
