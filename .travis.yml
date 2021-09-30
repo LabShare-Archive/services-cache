@@ -10,7 +10,7 @@ before_install:
   - |-
     if [ $TRAVIS_PULL_REQUEST == false ] && [ $TRAVIS_BRANCH == "master" ];
      then
-        echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc;
+        echo "//registry.npmjs.org/:_authToken=\${NPM_PUBLISH_TOKEN}" > ~/.npmrc;
       else
         echo "//registry.npmjs.org/:_authToken=\${NPM_INSTALL_TOKEN}" > ~/.npmrc;
     fi
